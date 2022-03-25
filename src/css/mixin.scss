@@ -1,0 +1,98 @@
+@mixin responsive($breakpoint) {
+  @if $breakpoint==sm {
+    @media (min-width: 600px) {
+      @content
+    }
+
+    ;
+  }
+
+  @if $breakpoint==md {
+    @media (min-width: 768px) {
+      @content
+    }
+
+    ;
+  }
+
+  @if $breakpoint==lg {
+    @media (min-width: 1024px) {
+      @content
+    }
+
+    ;
+  }
+
+
+  @if $breakpoint==xl {
+    @media (min-width: 1280px) {
+      @content
+    }
+
+    ;
+  }
+}
+
+
+@mixin special_bg($w, $h, $x, $y) {
+  .title {
+    position: relative;
+    width: $w;
+    max-width: $w;
+    height: $h;
+    &--front,
+    &--front-duplicate {
+      background: $linear-yellow;
+      position: absolute;
+    }
+    &--front {
+      height: 100%;
+      width: calc(100% - #{$y});
+      border-radius: calc(#{$y} / 2);
+      border: 1px solid #E8AB4D;
+      z-index: 1;
+      top: 0;
+    }
+    &--front-duplicate {
+      width: calc(100% - 2px);
+      height: calc(100% - #{$x});
+      border: 1px solid $linear-yellow;
+      color: $light-brown;
+      border-radius: calc(#{$x} * 2);
+      top: calc(#{$x} / 2);
+      left: calc(#{$y} / -2 + 1px);
+      z-index: 2;
+      text-align: center;
+      line-height: 30px;
+      .dot {
+        width: 4px;
+        height: 4px;
+        display: block;
+        background-color: #e8ab4d;
+        border-radius: 1px;
+        transform: rotate(45deg);
+        z-index: 10;
+        position: absolute;
+      }
+      .dot-left {
+        margin-top: 13.5px;
+        left: 5px
+      }
+      .dot-right {
+        margin-top: 13.5px;
+        right: 5px
+      }
+    }
+    &--back {
+      width: 100%;
+      height: calc(100% - #{$x});
+      position: absolute;
+      top: calc(#{$x} / 2);
+      left: calc(#{$y} / -2);
+      background: $yellow;
+      border-radius: calc(#{$x} * 2);
+      border: 1px solid #E8AB4D;
+    }
+  }
+}
+

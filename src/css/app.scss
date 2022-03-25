@@ -1,0 +1,18 @@
+// app global css in SCSS form
+@import './font.scss';
+@import './expand.scss';
+@import './color.scss';
+@import './mixin.scss';
+@import './position.scss';
+@import './spacing.scss';
+@import './form';
+
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style-type: none;
+  font-family: Nunito, Avenir, Helvetica, Arial, sans-serif;
+}
+
+

@@ -1,0 +1,199 @@
+@mixin form {
+  .form-title {
+    color: $brown;
+  }
+  .contain-submit {
+    width: 100% !important;
+  }
+  .form-field {
+    position: relative;
+    width: calc(100% * 13 / 15);
+    .form-input {
+      border: 2px solid $dark-blue;
+      color: $dark-blue;
+      border-radius: 10px;
+      padding: 10px 35px 10px 15px;
+      background: transparent;
+      outline: none;
+      word-break: break;
+    }
+    .border-danger {
+      border: 2px solid $red !important;
+    }
+    .form-input--text {
+      padding-left: 45px !important;
+    }
+    .form-input:focus, .form-input:not(:placeholder-shown) {
+      border: 2px solid $dark-blue;
+    }
+    .form-input:not(:placeholder-shown) + .form-label, .form-input:focus + .form-label {
+      top: 0;
+      padding: 0 3px;
+      display:inline-block;
+      background: #FFE2B2;
+    }
+    .form-label {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 16px;
+      color: $dark-blue;
+      user-select: none;
+      pointer-events: none;
+    }
+    .form-select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      text-indent: 1px;
+      text-overflow: '';
+      background: transparent;
+      border: none;
+      outline: none;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 16px;
+      color: $dark-blue;
+      display: none;
+    }
+    .form-input:focus ~ .form-select, .form-input:not(:placeholder-shown) ~ .form-select {
+      display: block;
+    }
+    .form-btn--showpw {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 16px;
+      color: $dark-blue;
+      background: transparent;
+      border: none;
+      outline: none;
+    }
+    .form-input:focus ~ .form-btn--showpw , .form-input:not(:placeholder-shown) ~ .form-btn--showpw  {
+      top: 27px;
+    }
+    .form-input--password:focus, .form-input--password:not(:placeholder-shown) {
+      margin-top: 5px;
+    }
+    .form-input--password:not(:placeholder-shown) + .form-label, .form-input--password:focus + .form-label {
+      top: 5px;
+    }
+    .btn-submit {
+      outline: none;
+      border: none;
+      width: fit-content;
+      cursor: pointer;
+      @include special-bg(87.5vw, 45px, 10px, 14px);
+      @include responsive(sm) {
+        @include special-bg(280px, 45px, 10px, 14px);
+      }
+      .title {
+        &--front,
+        &--front-duplicate,
+        &--back {
+      margin-left: 7px;
+      background: $light-gray;
+      border: 2px solid $gray;
+      color: $dark-gray;
+        }
+        &--front-duplicate {
+          width: calc(100% - 4px);
+          left: calc(14px / -2 + 2px);
+          border: none;
+          line-height: 35px;
+        }
+      }
+    }
+    .btn-submit:hover {
+      .title {
+        &--front,
+        &--front-duplicate,
+        &--back {
+
+      background: $red;
+      border: 2px solid $beige;
+      color: $light-pink;
+        }
+        &--front-duplicate {
+          width: calc(100% - 4px);
+          left: calc(14px / -2 + 2px);
+          border: none;
+          line-height: 35px;
+        }
+      }
+    }
+    .disabled:hover {
+      .title {
+        &--front,
+        &--front-duplicate,
+        &--back {
+      background: $light-gray;
+      border: 2px solid $gray;
+      color: $dark-gray;
+        }
+        &--front-duplicate {
+          line-height: 35px;
+          border: none;
+        }
+      }
+    }
+    .enabled {
+      .title {
+        &--front,
+        &--front-duplicate,
+        &--back {
+      background: $red;
+      border: 2px solid $beige;
+      color: $light-pink;
+        }
+        &--front-duplicate {
+          border: none;
+        }
+      }
+    }
+    .forgot-link {
+      color: $dark-blue;
+    }
+    .signup-link {
+      span {
+        color: $red;
+      }
+    }
+    hr {
+      width: 17px;
+      background: $brown;
+      height: 1px;
+      border: none;
+      outline: none;
+    }
+    .alert-danger {
+      position: relative;
+      color: $red;
+      background: $gradient-pink;
+      border: $red 1px solid;
+      border-radius: 10px;
+      width:106%;
+      left:-3%;
+      .little {
+        width: 16px;
+        height: 16px;
+      }
+
+      p {
+        width: calc(100% - 56px);
+        text-align: left;
+      }
+    }
+    .check-pass {
+      .access {
+        color: green;
+      }
+      div {
+        img {
+          width: 10px;
+          height: 10px;
+        }
+      }
+    }
+  }
+}

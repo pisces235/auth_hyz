@@ -1,0 +1,34 @@
+
+.w-100 {
+  width: 100%;
+}
+.w-75 {
+  width: 75%;
+}
+.w-50 {
+  width: 50%;
+}
+.w-25 {
+  width: 25%;
+}
+.w-inherit {
+  width: inherit;
+}
+.w-fit-content {
+  width: fit-content;
+}
+.w-img-bottom {
+  width: calc(108px / 320px * 100%);
+}
+
+.h-100 {
+  height: 100vh;
+}
+
+.expand-w {
+  width: 104% !important;
+}
+
+.d-none {
+  display: none;
+}
