@@ -1,10 +1,10 @@
 <template>
-  <div class="contain-login h-100 mr-ss ml-ss" @load="checkLogin()">
+  <div class="contain-login height-viewport-100 mr-ss ml-ss" @load="checkLogin()">
     <div
-      class="login-fail-content row justify-center z-1 w-100 relative-position"
+      class="login-fail-content row justify-center z-1 width-percentage-100 relative-position"
       @show="restartFive()"
     >
-      <div class="contain-title row justify-center relative-position w-100 ml-md">
+      <div class="contain-title row justify-center relative-position width-percentage-100 ml-md">
         <div class="title-smaller">
           <div class="title">
             <div class="title--front"></div>
@@ -29,18 +29,18 @@
           </div>
         </div>
       </div>
-      <div class="icon-title w-100 mt-xxl row justify-center">
+      <div class="icon-title width-percentage-100 mt-xxl row justify-center">
         <img class="big" src="../images/cross.png" />
       </div>
       <form
-        class="w-100 row wrap justify-center relative-position mt-lg"
+        class="width-percentage-100 row wrap justify-center relative-position mt-lg"
         action=""
       >
         <div class="form-field mb-sm">
           <div class="alert-danger">
             <div class="incorect-number row justify-center">
               <p
-                class="f-size-sm mt-sm mb-sm text-auto pb-xl"
+                class="f-size-sm mt-sm mb-sm text-center pb-xl"
               >
                 Uh oh! Your account has been locked for security reasons after 5 failed login attempts.
               </p>
@@ -63,7 +63,7 @@
         </div>
         <div class="form-field">
           <hr class="mx-auto mb-sm mt-ss" />
-          <div class="signup-contain text-auto">
+          <div class="signup-contain text-center">
             <router-link to="/login" class="signup-link"
               ><span>Back to log in</span></router-link
             >
@@ -76,10 +76,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useLoginStore } from '../stores/login-store';
+import { useLayoutStore } from '../stores/layout-store';
 import { useRouter } from 'vue-router';
 
-const store = useLoginStore();
+const store = useLayoutStore();
 
 const title = 'Browser Blocked!';
 const router = useRouter();

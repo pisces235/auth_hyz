@@ -1,18 +1,31 @@
 <template>
-  <div class="container row justify-center">
-    <TopAuth class="relative-position z-0"></TopAuth>
-    <div class="main h-100">
-      <div class="main-contain justify-center mt-md">
+  <div
+    class="container row justify-center"
+    :class="{ hide: LocalStorage.getItem('hideLayout') }"
+  >
+    <TopAuth
+      class="relative-position z-0"
+      v-show="!LocalStorage.getItem('hideLayout')"
+    ></TopAuth>
+    <div
+      class="main height-viewport-100"
+      :class="{ hide: LocalStorage.getItem('hideLayout') }"
+    >
         <router-view></router-view>
-      </div>
+
     </div>
-    <BottomAuth></BottomAuth>
+    <BottomAuth v-show="!LocalStorage.getItem('hideLayout')"></BottomAuth>
   </div>
 </template>
 
 <script setup lang="ts">
-import TopAuth from '../components/auth-layouts/TopAuth.vue';
-import BottomAuth from '../components/auth-layouts/BottomAuth.vue';
+import TopAuth from '../components/auth-layouts/TopAuth.vue'
+import BottomAuth from '../components/auth-layouts/BottomAuth.vue'
+// import { ref, watchEffect } from 'vue'
+import { LocalStorage } from 'quasar'
+
+// let hideLayout = LocalStorage.getItem('hideLayout')
+// console.log(hideLayout)
 </script>
 
 <style lang="scss" scoped>
@@ -27,5 +40,9 @@ import BottomAuth from '../components/auth-layouts/BottomAuth.vue';
     background: $gradient-beige;
     width: calc(100% - 20px);
   }
+}
+.hide {
+  background: transparent !important;
+  width: 100% !important;
 }
 </style>

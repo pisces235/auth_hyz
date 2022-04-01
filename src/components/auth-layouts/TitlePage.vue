@@ -1,5 +1,5 @@
 <template>
-  <div class="contain-title row justify-center relative-position w-100">
+  <div class="contain-title row justify-center relative-position width-percentage-100">
         <div class="title-smaller">
           <div class="title">
             <div class="title--front"></div>
@@ -13,7 +13,7 @@
             <div class="title--back"></div>
           </div>
           <div class="title-bg">
-            <img src="../images/pattern.png" alt="" class="align-center" />
+            <img src="../../images/pattern.png" alt="" class="align-center" />
           </div>
         </div>
         <div class="title-bigger">
@@ -51,7 +51,7 @@ const props = defineProps({
           img {
             position: absolute;
             top: -3px;
-            left: -10px;
+            left: 0;
             z-index: 2;
             width: 180px;
           }

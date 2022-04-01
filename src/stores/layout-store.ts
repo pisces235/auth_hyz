@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia';
 
 
-export const useLoginStore = defineStore('login', {
+export const useLayoutStore = defineStore('login', {
   state: () => ({
     countLoginFail: 0,
     countDownBlock: 6,
+    hideLayout: false
   }),
   getters: {
 

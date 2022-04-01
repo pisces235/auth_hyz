@@ -1,5 +1,5 @@
 <template>
-  <div class="column w-100 text-center">
+  <div class="column width-percentage-100 text-center">
     <ul class="mt-50">
       <li><p>Something here</p></li>
       <li>

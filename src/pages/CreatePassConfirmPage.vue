@@ -2,9 +2,9 @@
   <div class="container w-100 relative-position mx-auto">
     <div class="img-top">
       <img src="../images/curve.png" alt="" class="w-100 mt-xl">
-      <div class="title absolute-top  text-auto f-size-lg">You're all set</div>
+      <div class="title absolute-top  text-center text-lg">You're all set</div>
     </div>
-    <div class="contain-text middle text-auto f-size-sm">
+    <div class="contain-text middle text-center text-sm">
       <p class="mx-auto">You have successfully reset your password.<br>You can now use your new password to log in to your account.</p>
     </div>
     <div class="image-bottom w-100 absolute-bottom">
@@ -16,7 +16,7 @@
           <button class="btn-submit mx-auto row enabled">
             <div class="title">
               <div class="title--front"></div>
-              <div class="title--front-duplicate f-size-md">Back to log in</div>
+              <div class="title--front-duplicate text-md">Back to log in</div>
               <div class="title--back"></div>
             </div></button
         ></router-link>

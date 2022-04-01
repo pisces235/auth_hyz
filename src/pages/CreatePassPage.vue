@@ -1,10 +1,10 @@
 <template>
-  <div class="contain-login h-100 mr-ss ml-ss">
-    <div class="login-content row justify-between z-1 w-100 relative-position">
+  <div class="contain-login height-viewport-100 mr-ss ml-ss">
+    <div class="login-content row justify-between z-1 width-percentage-100 relative-position">
       <router-link to="/forgot-password" class="back-btn absolute-top">
         <div class="title">
           <div class="title--front"></div>
-          <div class="title--front-duplicate f-size-md">
+          <div class="title--front-duplicate text-sm">
             <q-icon name="mdi-chevron-left" />
           </div>
           <div class="title--back"></div>
@@ -12,7 +12,7 @@
       </router-link>
       <TitleLoginPage title_page="Set New Password" />
       <form
-        class="w-100 row wrap justify-center relative-position mt-xxl"
+        class="width-percentage-100 row wrap justify-center relative-position mt-xxl"
         action=""
       >
       <div
@@ -24,7 +24,7 @@
           <div class="alert-danger pb-xl">
             <div class="incorect-number row  pb-xl">
               <img class="little mt-sm ml-sm mr-sm" src="../images/cross.png" />
-              <p class="f-size-sm mt-sm mb-sm">
+              <p class="text-sm mt-sm mb-sm">
                 Your passwords do not match.
               </p>
             </div>
@@ -33,13 +33,13 @@
         <div class="form-field mt-md">
           <input
             :type="input_type"
-            class="form-input form-input--password w-100 f-size-sm"
+            class="form-input form-input--password width-percentage-100 text-sm"
             :class="{ 'border-danger': isNotTheSame }"
             placeholder=" "
             v-model="password"
             @keyup="checkPass()"
           />
-          <label for="Password" class="form-label f-size-sm">NewPassword</label>
+          <label for="Password" class="form-label text-sm">NewPassword</label>
           <p class="form-btn--showpw" @click="changeType()">
             <q-icon name="mdi-eye-outline" />
           </p>
@@ -47,13 +47,13 @@
         <div class="form-field mt-md">
           <input
             :type="input_type2"
-            class="form-input form-input--password w-100 f-size-sm"
+            class="form-input form-input--password width-percentage-100 text-sm"
             :class="{ 'border-danger': isNotTheSame }"
             placeholder=" "
             v-model="confirm_password"
             @keyup="checkPass()"
           />
-          <label for="Password" class="form-label f-size-sm"
+          <label for="Password" class="form-label text-sm"
             >Confirm New Password</label
           >
           <p class="form-btn--showpw" @click="changeType2()">
@@ -61,7 +61,7 @@
           </p>
         </div>
 
-        <div class="form-field f-size-sm">
+        <div class="form-field text-sm">
           <div class="check-pass mt-lg">
             <div class="text mt-ss mb-ss">
               In order to protect your account, make sure that your password
@@ -135,7 +135,7 @@
             <button class="btn-submit mx-auto row enabled">
               <div class="title">
                 <div class="title--front"></div>
-                <div class="title--front-duplicate f-size-md">Next</div>
+                <div class="title--front-duplicate text-sm">Next</div>
                 <div class="title--back"></div>
               </div>
             </button>
@@ -143,7 +143,7 @@
           <button class="btn-submit mx-auto row disabled" v-else disabled>
             <div class="title">
               <div class="title--front"></div>
-              <div class="title--front-duplicate f-size-md">Next</div>
+              <div class="title--front-duplicate text-sm">Next</div>
               <div class="title--back"></div>
             </div>
           </button>
@@ -155,12 +155,12 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useLoginStore } from '../stores/login-store';
+import { useLayoutStore } from '../stores/layout-store';
 import { useAccountStore } from '../stores/account-store';
 import { useRouter } from 'vue-router';
 import TitleLoginPage from '../components/auth-layouts/TitlePage.vue';
 
-const loginStore = useLoginStore();
+const loginStore = useLayoutStore();
 const accountStore = useAccountStore();
 const router = useRouter();
 

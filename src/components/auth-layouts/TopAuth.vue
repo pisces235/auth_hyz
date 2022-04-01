@@ -1,7 +1,7 @@
 <template>
   <div class="container justify-center">
     <div class="top-bg absolute-top z-0">
-      <img src="../../images/wood-base.png" alt="" class="top-bg_img w-100" />
+      <img src="../../images/wood-base.png" alt="" class="top-bg_img width-percentage-100" />
     </div>
   </div>
 </template>
