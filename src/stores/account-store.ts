@@ -5,7 +5,8 @@ import { LocalStorage } from 'quasar'
 export const useAccountStore = defineStore('account', {
   state: () => ({
     id: '',
-    isLogin: false
+    isLogin: false,
+    token: '',
   }),
   getters: {
     // setMobileNumber: (state, mb: string) => {
@@ -26,6 +27,7 @@ export const useAccountStore = defineStore('account', {
         password: password
       })
       LocalStorage.set('token', response.data.data.token)
+      this.token = response.data.data.token
       this.id = response.data.data.user.id
 
       return { response: response }

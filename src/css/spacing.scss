@@ -60,8 +60,13 @@
   margin-bottom: auto;
 }
 .fit-content {
-  width: fit-content;
-  height: fit-content;
+  width: fit-content !important;
+  height: fit-content !important;
+}
+
+.mx-none {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }
 
 .float-right {float: right;}

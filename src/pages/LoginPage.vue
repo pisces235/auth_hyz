@@ -17,19 +17,21 @@
         :usePasswordInput="true"
         :errorBorder_Password="errorBorder_Password"
         :useForgotLink="true"
-        :useBtnLogin="true"
+        :useBtn="true"
         :useLoginBottom="true"
+        :bottomText="'New to the game?'"
+        :bottomLink="'/create-account'"
+        :bottomLinkText="'Sign up here'"
         @submit="login"
         :mt_100="true"
       />
-      {{ data }}
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import TitleLoginPage from '../components/auth-layouts/TitlePage.vue'
-import FormPage from '../components/form/indexForm.vue'
+import FormPage from '../components/form/FormComponent.vue'
 
 import { ref } from 'vue'
 import { useAccountStore } from '../stores/account-store'
@@ -46,9 +48,6 @@ const router = useRouter()
 //   '4timesWrong'
 // ]
 
-// let showMBAlert = ref(false)
-// let mobile_number = ref('')
-// let password = ref()
 let data = ref()
 let errorBorder_MB = ref()
 let errorBorder_Password = ref()
@@ -97,7 +96,7 @@ function login(
       }
 
       if (countInputWrong.value >= 5) {
-        LocalStorage.set('timeBrowserBlock', 300)
+        LocalStorage.set('timeBrowserBlock', 15)
         router.push('/login-block')
       }
     })

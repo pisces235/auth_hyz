@@ -1,5 +1,5 @@
 <template>
-  <div class="form-field mx-auto relative-position width-percentage-100">
+  <div class="form-field mx-auto relative-position width-percentage-100" >
     <button
       class="btn login fit-content mx-auto"
       :class="{
@@ -12,6 +12,7 @@
         :src="props.src"
         alt=""
         :class="'width-' + props.width + ' height-' + props.height"
+        class="mx-auto"
       />
       <div class="btn-title absolute-top text-center">
         {{ props.title_btn }} <span v-if="LocalStorage.getItem('countInputWrong') == 3">{{LocalStorage.getItem('timeBlockBtn')}}</span>

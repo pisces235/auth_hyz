@@ -1,8 +1,8 @@
 <template>
   <form
     id="form"
-    class="width-percentage-100 row wrap justify-center relative-position "
-    :class="{'mt-100' : props.mt_100 }"
+    class="width-percentage-100 row wrap justify-center relative-position"
+    :class="{ 'mt-100': props.mt_100 }"
     @submit.prevent="submit(), loadCover()"
   >
     <div
@@ -12,7 +12,10 @@
       <p>{{ props.titleForm }}</p>
     </div>
 
-    <div class="contain-alert width-percentage-100" v-show="props.useErrorAlert">
+    <div
+      class="contain-alert width-percentage-100"
+      v-show="props.useErrorAlert"
+    >
       <div
         class="form-field mb-20"
         v-show="props.titleAlertError == 'wrongMobileNumber'"
@@ -41,7 +44,8 @@
               src="../../images/cross.png"
             />
             <p class="text-xs mt-10 mb-10">
-              Hm... First number input must be 8 or 9 and Mobile Number at least eight characters, please try again!
+              Hm... First number input must be 8 or 9 and Mobile Number at least
+              eight characters, please try again!
             </p>
           </div>
         </div>
@@ -121,6 +125,17 @@
           </div>
         </div>
       </div>
+      <div class="form-field mb-sm" v-show="props.titleAlertError == 'blockAccount'">
+          <div class="alert-danger">
+            <div class="incorect-number row justify-center">
+              <p
+                class="text-sm mt-6 mb-6 text-center width-250"
+              >
+                Uh oh! Your account has been locked for security reasons after 5 failed login attempts.
+              </p>
+            </div>
+          </div>
+        </div>
     </div>
 
     <div class="form-field" v-show="props.useMobileNumberInput">
@@ -134,11 +149,9 @@
         @input="changeNumber(), changeResult()"
       />
       <label for="mobile-number" class="form-label">Mobile Number</label>
-      <select name="" id="" class="form-select" v-model="firstNumber">
-        <option v-for="(text, i) in listFirstNumber" :key="i" :value="text">
-          +{{ text }}
-        </option>
-      </select>
+      <div name="" id="" class="form-select fit-content">
+        +{{ firstNumber }}
+      </div>
     </div>
 
     <div class="form-field mt-15 height-45" v-show="props.usePasswordInput">
@@ -156,7 +169,10 @@
         <q-icon name="mdi-eye-outline" />
       </p>
     </div>
-    <div class="form-field mt-9 mb-24 width-percentage-100" v-show="props.useForgotLink">
+    <div
+      class="form-field mt-9 mb-24 width-percentage-100"
+      v-show="props.useForgotLink"
+    >
       <router-link to="/forgot-password" class="forgot-link float-right"
         >Forgot Password?</router-link
       >
@@ -166,6 +182,11 @@
         >
       </div>
     </div>
+
+    <div class="little-content mt-20 mb-10" v-show="props.useLittleContent">
+      {{ props.littleContent }}
+    </div>
+
     <ButtonForm
       :title_btn="'Log in'"
       :color_btn="'info'"
@@ -173,7 +194,7 @@
       :src="'/src/images/bg_btn_info.png'"
       :width="'280'"
       :height="'44'"
-      v-show="showBtnInfo && props.useBtnLogin"
+      v-show="showBtnInfo && props.useBtn"
     />
     <ButtonForm
       :title_btn="'Log in'"
@@ -182,15 +203,15 @@
       :src="'/src/images/bg_btn_danger.png'"
       :width="'280'"
       :height="'44'"
-      v-show="showBtnDanger && props.useBtnLogin"
+      v-show="showBtnDanger && props.useBtn"
     />
 
     <div class="form-field" v-show="props.useLoginBottom">
       <hr class="mx-auto mb-10 mt-5" />
       <div class="signup-contain text-center">
-        <div class="text">New to the game?</div>
-        <router-link to="/" class="signup-link"
-          ><span>Sign up here</span>.</router-link
+        <div class="text">{{props.bottomText}}</div>
+        <router-link :to="props.bottomLink" class="signup-link"
+          ><span>{{props.bottomLinkText}}</span>.</router-link
         >
       </div>
     </div>
@@ -225,7 +246,7 @@ import { ref, watchEffect } from 'vue'
 // import { useAccountStore } from '../../stores/account-store'
 // import { useRouter } from 'vue-router'
 import { LocalStorage } from 'quasar'
-import ButtonForm from './buttonFrom.vue'
+import ButtonForm from './ButtonForm.vue'
 
 let mobile_number = ref('')
 let number = ref('')
@@ -246,9 +267,8 @@ const props = defineProps({
   titleForm: String,
   useTitle: Boolean,
 
-  useErrorAlert:Boolean,
+  useErrorAlert: Boolean,
   titleAlertError: String,
-
 
   useMobileNumberInput: Boolean,
   errorBorder_MB: Boolean,
@@ -258,19 +278,23 @@ const props = defineProps({
 
   useForgotLink: Boolean,
 
-  useBtnLogin: Boolean,
+  useLittleContent: Boolean,
+  littleContent: String,
 
-  useBtnBlock: Boolean,
+  useBtn: Boolean,
 
   useLoginBottom: Boolean,
+  bottomText: String,
+  bottomLink: String,
+  bottomLinkText:String,
 
-  mt_100: Boolean,
+  mt_100: Boolean
 })
 const emit = defineEmits(['submit'])
 function submit() {
   emit('submit', mobile_number.value, password.value)
 }
-const listFirstNumber = ['65', '84']
+// const listFirstNumber = ['65', '84']
 
 const changeNumber = () => {
   if (number.value.length > 8 && number.value.search(' ') == -1) {
@@ -300,19 +324,18 @@ function loadCover() {
 const hideCover = () => {
   showCover.value = false
 }
-watchEffect( () => {
-  // toggle button
+watchEffect(() => {
+  // toggle button login
   if (
     number.value.length > 0 &&
     password.value.length > 0 &&
     number.value !== ' ' &&
     password.value !== ' '
   ) {
-    showBtnDanger.value  = true
+    showBtnDanger.value = true
     showBtnInfo.value = false
-  }
-  else{
-    showBtnDanger.value  = false
+  } else {
+    showBtnDanger.value = false
     showBtnInfo.value = true
   }
 })

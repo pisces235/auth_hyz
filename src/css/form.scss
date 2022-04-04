@@ -131,6 +131,7 @@
     .info {
       color: $dark-gray;
       pointer-events: none;
+      user-select: none;
     }
     .forgot-link {
       color: $dark-blue;
