@@ -1,36 +1,71 @@
 <template>
-  <div class="form-field mx-auto relative-position width-percentage-100" >
+  <div class="form-field row justify-center">
     <button
-      class="btn login fit-content mx-auto"
+      class="btn relative-position justify-center"
       :class="{
-        'danger': props.color_btn == 'danger',
-        'warning': props.color_btn == 'warning',
-        'info': props.color_btn == 'info'
+        danger: props.btnColor == 'danger',
+        warning: props.btnColor == 'warning',
+        info: props.btnColor == 'info'
       }"
+      :type="props.btnType"
     >
       <img
-        :src="props.src"
+        :src="props.imgSrc"
         alt=""
-        :class="'width-' + props.width + ' height-' + props.height"
+        :class="
+          'width-' +
+          props.imgWidth +
+          ' height-' +
+          props.imgHeight +
+          ' width-percentage-' +
+          props.imgWidthPercent
+        "
         class="mx-auto"
       />
       <div class="btn-title absolute-top text-center">
-        {{ props.title_btn }} <span v-if="LocalStorage.getItem('countInputWrong') == 3">{{LocalStorage.getItem('timeBlockBtn')}}</span>
+        {{ props.btnTitle }}
+        <!-- <span
+          v-show="
+            LocalStorage.getItem('countInputLoginWrong') == 3 &&
+            LocalStorage.getItem('timeBlockBtn') > 0
+          "
+          >{{ timer }}</span
+        > -->
       </div>
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
-import { LocalStorage } from 'quasar';
+// import { onMounted, ref, watchEffect } from 'vue'
+import { LocalStorage } from 'quasar'
+
+// const countDown = () => {
+//   let timer = ref(LocalStorage.getItem('timeBlockBtn'))
+//   let interval = setInterval(() => {
+//     if (timer.value === 0) {
+//       clearInterval(interval)
+//     } else {
+//       timer.value = Number(timer.value) - 1
+//       LocalStorage.set('timeBlockBtn', Number(timer.value))
+//     }
+//   }, 1000)
+//   return timer.value
+// }
+// let timer = ref()
+// watchEffect(() => {
+//   if(LocalStorage.getItem('countInputLoginWrong') == 3)
+//     timer.value = countDown()
+// })
 
 const props = defineProps({
-  title_btn: String,
-  color_btn: String,
-  src: String,
-  width: String,
-  height: String
+  btnType: { value: String, default: null },
+  btnTitle: String,
+  btnColor: String,
+  imgSrc: String,
+  imgWidth: String,
+  imgWidthPercent: String,
+  imgHeight: String
 })
 </script>
 

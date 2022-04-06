@@ -1,17 +1,17 @@
 
 @for $i from 0 through 200 {
   .width-percentage-#{$i} {
-      width: #{$i}#{"%"};
+      width: #{$i}#{"%"} !important;
   }
 }
 @for $i from 0 through 100 {
   .width-viewport-#{$i} {
-      width: #{$i}#{"vw"};
+      width: #{$i}#{"vw"} !important;
   }
 }
 @for $i from 0 through 1000 {
   .width-#{$i} {
-      width: #{$i}#{"px"};
+      width: #{$i}#{"px"} !important;
   }
 }
 
@@ -35,10 +35,6 @@
   width: calc(108px / 320px * 100%);
 }
 
-.expand-w {
-  width: 104% !important;
-}
-
 .d-none {
-  display: none;
+  display: none !important;
 }

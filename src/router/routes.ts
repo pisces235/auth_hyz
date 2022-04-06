@@ -12,26 +12,26 @@ const routes: RouteRecordRaw[] = [
       },
       { path: 'login', component: () => import('pages/LoginPage.vue') },
       {
-        path: 'login-block',
-        component: () => import('pages/LoginBlockPage.vue')
+        path: 'browser/block',
+        component: () => import('src/pages/BlockBrowserPage.vue')
       },
       {
-        path: 'account-block',
+        path: 'password/forget',
+        component: () => import('src/pages/ForgotPasswordPage.vue')
+      },
+      {
+        path: 'password/create-new',
+        component: () => import('src/pages/CreateNewPasswordPage.vue')
+      },
+      {
+        path: 'account/block',
         component: () => import('pages/AccountBlockPage.vue')
       },
-      {
-        path: 'forgot-password',
-        component: () => import('pages/ForgotPassPage.vue')
-      },
-      {
-        path: 'create-password',
-        component: () => import('pages/CreatePassPage.vue')
-      }
     ]
   },
   {
-    path: '/create-pass-confirm',
-    component: () => import('pages/CreatePassConfirmPage.vue')
+    path: '/create-new-pass-confirm',
+    component: () => import('src/pages/ConfirmNewPasswordPage.vue')
   }
 ]
 

@@ -7,13 +7,10 @@
       class="relative-position z-0"
       v-show="!LocalStorage.getItem('hideLayout')"
     ></TopAuth>
-    <div
-      class="main height-viewport-100"
-      :class="{ hide: LocalStorage.getItem('hideLayout') }"
-    >
-        <router-view></router-view>
-
+    <div :class="{'main height-viewport-100' : !LocalStorage.getItem('hideLayout')}">
+      <router-view></router-view>
     </div>
+
     <BottomAuth v-show="!LocalStorage.getItem('hideLayout')"></BottomAuth>
   </div>
 </template>
@@ -32,13 +29,15 @@ import { LocalStorage } from 'quasar'
 @import '../css/app.scss';
 
 .container {
-  background: $gradient-blue;
+  background: $gradient-beige center no-repeat, $gradient-blue center no-repeat;
+  background-size: calc(100% - 20px), 100%;
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
   .main {
-    background: $gradient-beige;
-    width: calc(100% - 20px);
+    width: calc(100% - 30px);
+    border-right: 1px solid $yellow;
+    border-left: 1px solid $yellow;
   }
 }
 .hide {

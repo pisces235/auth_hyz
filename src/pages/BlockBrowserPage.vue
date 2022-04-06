@@ -18,31 +18,14 @@
       </div>
 
       <FormPage
-        :useErrorAlert="true"
-        :titleAlertError="'blockBrowser'"
-        :mt_100="false"
-      />
-
-      <ButtonForm
-        :title_btn="'Back to log in'"
-        :color_btn="'info'"
-        class="mb-2 text-center w-100 mt-15"
-        :src="'/src/images/bg_btn_info.png'"
-        :width="'280'"
-        :height="'44'"
-        v-show="showBtnInfo"
-      />
-      <router-link to="/login" @click="resetCountInputWrong()">
-        <ButtonForm
-          :title_btn="'Back to log in'"
-          :color_btn="'danger'"
-          class="mb-2 text-center w-100 mt-15"
-          :src="'/src/images/bg_btn_danger.png'"
-          :width="'280'"
-          :height="'44'"
-          v-show="showBtnDanger"
-        />
-      </router-link>
+      :useAlertError="true"
+      :titleAlertError="titleAlertError"
+      :useBtn="true"
+      :btnTitle="btnTitle"
+      :btnColor="btnColor"
+      :mt_100="false"
+      @submit="resetcountInputWrong()"
+    />
     </div>
   </div>
 </template>
@@ -58,21 +41,30 @@ import ButtonForm from '../components/form/ButtonForm.vue'
 
 const title = 'Browser Blocked!'
 const router = useRouter()
-const countInputWrong = ref()
-const checkLogin = () => {
-  countInputWrong.value = LocalStorage.getItem('countInputWrong')
-  if (countInputWrong.value < 5) {
-    router.push('/login')
+const titleAlertError = 'blockBrowser'
+const btnTitle = 'Back to log in'
+let btnColor = ref('info')
+
+
+const countInputLoginWrong = ref()
+// const checkLogin = () => {
+//   countInputLoginWrong.value = LocalStorage.getItem('countInputLoginWrong')
+//   if (countInputLoginWrong.value < 5) {
+//     router.push('/login')
+//   }
+// }
+const resetcountInputWrong = () => {
+  if(Number(LocalStorage.getItem('countInputLoginWrong')) > 0) {
+    LocalStorage.set('countInputLoginWrong', 0)
   }
-}
-const resetCountInputWrong = () => {
-  LocalStorage.set('countInputWrong', 0)
+  if(Number(LocalStorage.getItem('countInputForgotPasswordWrong')) > 0) {
+    LocalStorage.set('countInputForgotPasswordWrong', 0)
+  }
+  router.push('/login')
 }
 
-checkLogin()
+// checkLogin()
 
-let showBtnInfo = ref(true)
-let showBtnDanger = ref(false)
 let seconds = ref(0)
 let minutes = ref(0)
 let timer = ref(LocalStorage.getItem('timeBrowserBlock'))
@@ -83,15 +75,12 @@ let interval = setInterval(() => {
     timer.value = Number(timer.value) - 1
     LocalStorage.set('timeBrowserBlock', Number(timer.value))
     seconds.value = Number(timer.value) % 60
-    LocalStorage.set('seconds', seconds.value)
     if (Number(timer.value) >= 60) {
       if ((timer.value / 60) % 1 > 0.5)
         minutes.value = Math.round(timer.value / 60) - 1
       else minutes.value = Math.round(timer.value / 60)
-      LocalStorage.set('minutes', minutes.value)
     } else {
       minutes.value = 0
-      LocalStorage.set('minutes', minutes.value)
     }
   }
 }, 1000)
@@ -100,11 +89,9 @@ let interval = setInterval(() => {
 watchEffect(() => {
   // toggle button
   if (timer.value == 0) {
-    showBtnDanger.value = true
-    showBtnInfo.value = false
+    btnColor.value = 'danger'
   } else {
-    showBtnDanger.value = false
-    showBtnInfo.value = true
+    btnColor.value = 'info'
   }
 })
 </script>
@@ -117,28 +104,7 @@ watchEffect(() => {
   border-left: 1px solid $yellow;
   max-height: calc(100vh - 15px);
   .login-fail-content {
-    .contain-title {
-      .title-bigger {
-        position: absolute;
-        top: -5px;
-        z-index: 0;
-        @include special-bg(190px, 50px, 10px, 14px);
-        .title {
-          &--front,
-          &--front-duplicate,
-          &--back {
-            border-width: 2px;
-          }
-          &--front-duplicate {
-            width: calc(100% - 4px);
-            left: calc(14px / -2 + 2px);
-          }
-        }
-      }
-    }
-    form {
-      @include form;
-    }
+    @include form;
     .icon-title {
       .big {
         width: 56px;

@@ -1,142 +1,26 @@
 <template>
   <form
     id="form"
-    class="width-percentage-100 row wrap justify-center relative-position"
-    :class="{ 'mt-100': props.mt_100 }"
+    class="width-percentage-100 row wrap justify-center relative-position mt-percentage-9"
     @submit.prevent="submit(), loadCover()"
   >
     <div
-      class="form-title text-lg font-bold mb-25"
+      class="form-title text-lg font-bold mt-20"
       v-show="props.titleForm != 'undefined' && props.useTitle == true"
+      :class="{ 'mb-25': props.titleAlertError === '' }"
     >
       <p>{{ props.titleForm }}</p>
     </div>
 
-    <div
-      class="contain-alert width-percentage-100"
-      v-show="props.useErrorAlert"
-    >
-      <div
-        class="form-field mb-20"
-        v-show="props.titleAlertError == 'wrongMobileNumber'"
-      >
-        <div class="alert-danger">
-          <div class="incorect-number row">
-            <img
-              class="little mt-10 ml-10 mr-10"
-              src="../../images/cross.png"
-            />
-            <p class="text-xs mt-10 mb-10">
-              Hm... There isn’t an account registered with the number you’ve
-              entered. Please check and try again!
-            </p>
-          </div>
-        </div>
-      </div>
-      <div
-        class="form-field mb-20"
-        v-show="props.titleAlertError == 'invalidMobileNumber'"
-      >
-        <div class="alert-danger">
-          <div class="incorect-number row">
-            <img
-              class="little mt-10 ml-10 mr-10"
-              src="../../images/cross.png"
-            />
-            <p class="text-xs mt-10 mb-10">
-              Hm... First number input must be 8 or 9 and Mobile Number at least
-              eight characters, please try again!
-            </p>
-          </div>
-        </div>
-      </div>
-      <div
-        class="form-field mb-20"
-        v-show="props.titleAlertError == 'wrongPassword'"
-      >
-        <div class="alert-danger">
-          <div class="incorect-number row">
-            <img
-              class="little mt-10 ml-10 mr-10"
-              src="../../images/cross.png"
-            />
-            <p class="text-xs mt-10 mb-10">
-              Hm... Looks like this isn’t the correct password. Please try
-              again.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div
-        class="form-field mb-20"
-        v-show="props.titleAlertError == '3timesWrong'"
-      >
-        <div class="alert-danger">
-          <div class="incorect-number row">
-            <img
-              class="little mt-10 ml-10 mr-10"
-              src="../../images/cross.png"
-            />
-            <p class="text-xs mt-10 mb-10">
-              You’ve entered an incorrect password. You have
-              <b>2 more attempts</b>
-              before your account is locked. Tap “Forgot Password” if you’d like
-              to reset it.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div
-        class="form-field mb-20"
-        v-show="props.titleAlertError == '4timesWrong'"
-      >
-        <div class="alert-danger">
-          <div class="incorect-number row">
-            <img
-              class="little mt-10 ml-10 mr-10"
-              src="../../images/cross.png"
-            />
-            <p class="text-xs mt-10 mb-10">
-              You’ve entered an incorrect password. You have
-              <b>1 more attempts</b>
-              before your account is locked. Tap “Forgot Password” if you’d like
-              to reset it.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div
-        class="form-field mb-10"
-        v-show="props.titleAlertError == 'blockBrowser'"
-      >
-        <div class="alert-danger">
-          <div class="incorect-number row justify-center">
-            <p
-              class="text-xs mt-10 mb-10 text-center"
-              v-if="Number(LocalStorage.getItem('timeBrowserBlock')) > 0"
-            >
-              Uh oh! You have attempted too many incorrect log ins. Please try
-              again after 5 mins.
-            </p>
-            <p class="text-xs mt-10 mb-10 text-center expand-w" v-else>
-              Uh oh! You have attempted too many incorrect log ins. Please try
-              again after 5 mins.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="form-field mb-sm" v-show="props.titleAlertError == 'blockAccount'">
-          <div class="alert-danger">
-            <div class="incorect-number row justify-center">
-              <p
-                class="text-sm mt-6 mb-6 text-center width-250"
-              >
-                Uh oh! Your account has been locked for security reasons after 5 failed login attempts.
-              </p>
-            </div>
-          </div>
-        </div>
-    </div>
+    <AlertInfo
+      v-show="props.useAlertInfo"
+      :titleAlertInfo="props.titleAlertInfo"
+    />
+
+    <AlertError
+      v-show="props.useAlertError"
+      :titleAlertError="props.titleAlertError"
+    />
 
     <div class="form-field" v-show="props.useMobileNumberInput">
       <input
@@ -146,7 +30,7 @@
         placeholder=" "
         v-model="number"
         :maxlength="9"
-        @input="changeNumber(), changeResult()"
+        @input="changeNumber(), changeResult(), getInput()"
       />
       <label for="mobile-number" class="form-label">Mobile Number</label>
       <div name="" id="" class="form-select fit-content">
@@ -163,55 +47,105 @@
         }"
         placeholder=" "
         v-model="password"
+        @input="getInput()"
       />
-      <label for="Password" class="form-label">Password</label>
+      <label for="Password" class="form-label">{{ props.titlePasswordInput }}</label>
       <p class="form-btn--showpw" @click="changeType()">
         <q-icon name="mdi-eye-outline" />
       </p>
     </div>
     <div
-      class="form-field mt-9 mb-24 width-percentage-100"
-      v-show="props.useForgotLink"
+      class="form-field mt-15 height-45"
+      v-show="props.useConfirmPasswordInput"
     >
-      <router-link to="/forgot-password" class="forgot-link float-right"
+      <input
+        :type="input_type"
+        class="form-input form-input--password width-percentage-100"
+        :class="{
+          'border-danger':
+            props.errorBorder_ConfirmPassword || props.errorBorder_Password
+        }"
+        placeholder=" "
+        v-model="confirmPassword"
+        @input="getInput()"
+      />
+      <label for="ConFirmPassword" class="form-label">Confirm Password</label>
+      <p class="form-btn--showpw" @click="changeType()">
+        <q-icon name="mdi-eye-outline" />
+      </p>
+    </div>
+
+    <div class="form-field mt-15 height-45" v-show="props.useOTPInput">
+      <input
+        type="number"
+        class="form-input form-input--password width-percentage-100"
+        :class="{
+          'border-danger': props.errorBorder_OTP
+        }"
+        placeholder=" "
+        v-model="OTP"
+        @input="getInput()"
+      />
+      <label for="OTP" class="form-label">OTP</label>
+      <p class="form-btn--showpw" @click="changeType()">
+        <q-icon name="mdi-eye-outline" />
+      </p>
+    </div>
+
+    <div class="form-field mt-9 mb-24" v-show="props.useForgotLink">
+      <router-link to="/password/forget" class="forgot-link float-right"
         >Forgot Password?</router-link
       >
       <div class="cover-forgot-pw" :class="{ 'd-none': !showCover }">
-        <router-link to="/forgot-password" class="forgot-link float-right"
+        <router-link to="/password/forget" class="forgot-link float-right"
           >Forgot Password?</router-link
         >
       </div>
     </div>
 
-    <div class="little-content mt-20 mb-10" v-show="props.useLittleContent">
-      {{ props.littleContent }}
+    <div
+      class="little-content mt-20 mb-10 text-center"
+      v-show="props.useLittleContent"
+    >
+      <p>{{ props.littleContent }}</p>
     </div>
 
     <ButtonForm
-      :title_btn="'Log in'"
-      :color_btn="'info'"
-      class="mb-2 text-center w-100"
-      :src="'/src/images/bg_btn_info.png'"
-      :width="'280'"
-      :height="'44'"
-      v-show="showBtnInfo && props.useBtn"
-    />
-    <ButtonForm
-      :title_btn="'Log in'"
-      :color_btn="'danger'"
-      class="mb-2 text-center w-100"
-      :src="'/src/images/bg_btn_danger.png'"
-      :width="'280'"
-      :height="'44'"
-      v-show="showBtnDanger && props.useBtn"
-    />
+        :btnType="'submit'"
+        :btnTitle="props.btnTitle"
+        :btnColor="props.btnColor"
+        class="mb-2 text-center width-percentage-100"
+        :imgSrc="`/src/images/bg_btn_${props.btnColor}.png`"
+        :imgWidth="props.imgWidth"
+        :imgWidthPercent="props.imgWidthPercent"
+        :imgHeight="props.imgHeight"
+        v-show="props.useBtn"
+      />
+
+    <a
+      :href="props.btnLink"
+      v-show="props.useBtnLink"
+      :class="{ 'mt-150': props.mt_150 }"
+    >
+      <ButtonForm
+        :btnType="'submit'"
+        :btnTitle="props.btnLinkTitle"
+        :btnColor="props.btnLinkColor"
+        class="mb-2 text-center width-percentage-100"
+        :imgSrc="`/src/images/bg_btn_${props.btnLinkColor}.png`"
+        :imgWidth="props.imgWidth"
+        :imgWidthPercent="props.imgWidthPercent"
+        :imgHeight="props.imgHeight"
+      />
+    </a>
 
     <div class="form-field" v-show="props.useLoginBottom">
-      <hr class="mx-auto mb-10 mt-5" />
+      <hr class="mx-auto mb-10 mt-3" />
       <div class="signup-contain text-center">
-        <div class="text">{{props.bottomText}}</div>
+        <div class="text">{{ props.bottomText }}</div>
         <router-link :to="props.bottomLink" class="signup-link"
-          ><span>{{props.bottomLinkText}}</span>.</router-link
+          ><span>{{ props.bottomLinkText }}</span
+          >.</router-link
         >
       </div>
     </div>
@@ -245,54 +179,79 @@ import { ref, watchEffect } from 'vue'
 // import { computed } from '@vue/reactivity'
 // import { useAccountStore } from '../../stores/account-store'
 // import { useRouter } from 'vue-router'
-import { LocalStorage } from 'quasar'
+// import { LocalStorage } from 'quasar'
 import ButtonForm from './ButtonForm.vue'
+import AlertInfo from './AlertInfo.vue'
+import AlertError from './AlertError.vue'
 
 let mobile_number = ref('')
 let number = ref('')
 let password = ref('')
+let confirmPassword = ref('')
+let OTP = ref('')
 let firstNumber = ref('65')
 let input_type = ref('password')
-let showCover = ref()
+let showCover = ref(false)
 let showBtnInfo = ref(true)
-let showBtnDanger = ref(false)
+let showBtnError = ref(false)
 
-// let seconds = ref(0)
-// let minutes = ref(0)
 
-// let timer = ref(JSON.parse(window.localStorage.countDownLoginBtn))
-LocalStorage.set('timeBLockBtn', 10) // set time block button in 10 second
 
 const props = defineProps({
-  titleForm: String,
-  useTitle: Boolean,
+  titleForm: { value: { value: String, default: '' }, default: '' },
+  useTitle: { useTitle: Boolean, default: false },
 
-  useErrorAlert: Boolean,
-  titleAlertError: String,
+  useAlertInfo: { value: Boolean, default: false },
+  titleAlertInfo: { value: String, default: '' },
 
-  useMobileNumberInput: Boolean,
-  errorBorder_MB: Boolean,
+  useAlertError: { value: Boolean, default: false },
+  titleAlertError: { value: String, default: '' },
 
-  usePasswordInput: Boolean,
-  errorBorder_Password: Boolean,
+  useMobileNumberInput: { value: Boolean, default: false },
+  errorBorder_MB: { value: Boolean, default: false },
 
-  useForgotLink: Boolean,
+  titlePasswordInput: { value: String, default: 'Password' },
+  usePasswordInput: { value: Boolean, default: false },
+  errorBorder_Password: { value: Boolean, default: false },
 
-  useLittleContent: Boolean,
-  littleContent: String,
+  useConfirmPasswordInput: { value: Boolean, default: false },
+  errorBorder_ConfirmPassword: { value: Boolean, default: false },
 
-  useBtn: Boolean,
+  useOTPInput: { value: Boolean, default: false },
+  errorBorder_OTP: { value: Boolean, default: false },
 
-  useLoginBottom: Boolean,
-  bottomText: String,
-  bottomLink: String,
-  bottomLinkText:String,
+  useForgotLink: { value: Boolean, default: false },
 
-  mt_100: Boolean
+  useLittleContent: { value: Boolean, default: false },
+  littleContent: { value: String, default: '' },
+
+  useBtn: { value: Boolean, default: false },
+  btnTitle: { value: String, default: '' },
+  btnColor: { value: String, default: '' },
+
+  useBtnLink: { value: Boolean, default: false },
+  btnLinkTitle: { value: String, default: '' },
+  btnLinkColor: { value: String, default: '' },
+  btnLink: { value: String, default: '' },
+
+  imgBtnWidth: { value: String, default: null },
+  imgBtnWidthPercent: { value: String, default: null },
+  imgBtnHeight: { value: String, default: null },
+
+  useLoginBottom: { value: Boolean, default: false },
+  bottomText: { value: String, default: '' },
+  bottomLink: { value: String, default: '' },
+  bottomLinkText: { value: String, default: '' },
+
+  mt_100: { value: Boolean, default: false },
+  mt_150: { value: Boolean, default: false }
 })
-const emit = defineEmits(['submit'])
+const emit = defineEmits(['submit', 'input'])
 function submit() {
-  emit('submit', mobile_number.value, password.value)
+  emit('submit', mobile_number.value, password.value, confirmPassword.value, OTP.value)
+}
+function getInput() {
+  emit('input', mobile_number.value, password.value, confirmPassword.value, OTP.value)
 }
 // const listFirstNumber = ['65', '84']
 
@@ -320,7 +279,6 @@ function loadCover() {
     showCover.value = true
   } else showCover.value = false
 }
-
 const hideCover = () => {
   showCover.value = false
 }
@@ -332,10 +290,10 @@ watchEffect(() => {
     number.value !== ' ' &&
     password.value !== ' '
   ) {
-    showBtnDanger.value = true
+    showBtnError.value = true
     showBtnInfo.value = false
   } else {
-    showBtnDanger.value = false
+    showBtnError.value = false
     showBtnInfo.value = true
   }
 })

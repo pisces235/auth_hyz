@@ -34,10 +34,10 @@ import FormPage from '../components/form/FormComponent.vue'
 
 const store = useLayoutStore()
 
-const title = 'Account Blocked!'
+const title = 'Forgot Password'
 const router = useRouter()
 const titleAlertError = 'blockAccount'
-const littleContent = 'Please contact Sqkii on Facebook for assistance'
+const littleContent = `You're reached the limit of 5 OTP resend attempts. Please contact Sqkii on Facebook for assistance.`
 const BtnLinkTitle = 'Contact Sqkii'
 </script>
 

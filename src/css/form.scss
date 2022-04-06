@@ -109,6 +109,7 @@
         }
       }
     }
+
     .btn {
       display: block;
       cursor: pointer;
@@ -123,18 +124,13 @@
     .btn:active {
       filter: drop-shadow(0 3px 2px #c4c4c4);
     }
-
-    .warning,
-    .danger {
-      color: $light-pink;
-    }
-    .info {
-      color: $dark-gray;
-      pointer-events: none;
-      user-select: none;
-    }
     .forgot-link {
       color: $dark-blue;
+    }
+    .little-content {
+      p {
+        max-width: calc(100% * 7 / 8);
+      }
     }
     .signup-link {
       span {
@@ -148,24 +144,6 @@
       border: none;
       outline: none;
     }
-    .alert-danger {
-      position: relative;
-      color: $red;
-      background: $gradient-pink;
-      border: $red 1px solid;
-      border-radius: 10px;
-      width: 100%;
-      left: 7%;
-      .little {
-        width: 16px;
-        height: 16px;
-      }
-
-      p {
-        width: calc(100% - 56px);
-        text-align: left;
-      }
-    }
     .check-pass {
       .access {
         color: green;
@@ -177,5 +155,14 @@
         }
       }
     }
+  }
+  .warning,
+  .danger {
+    color: $light-pink;
+  }
+  .info {
+    color: $dark-gray;
+    pointer-events: none !important;
+    user-select: none !important;
   }
 }

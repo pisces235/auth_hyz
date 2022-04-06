@@ -8,27 +8,27 @@
       <div class="title mb-8 width-percentage-70 mx-auto">
         Reunite the Zodiac animals and win Ang baos worth up to S$888
       </div>
-      <router-link to="/login" class="landing-page--link w-280 fit-content">
+
+      <router-link to="/login" class="landing-page--link mx-auto fit-content">
         <ButtonForm
-          :title_btn="'Login To My Account'"
-          :color_btn="'danger'"
+          :btnTitle="'Login To My Account'"
+          :btnColor="'danger'"
           class="mb-2"
-          :src="'/src/images/bg_btn_danger.png'"
-          :width="'280'"
-          :height="'44'"
+          :imgSrc="'/src/images/bg_btn_danger.png'"
+          :imgWidth="'280'"
+          :imgHeight="'44'"
         />
       </router-link>
       <router-link
-        to="/create-account"
-        class="landing-page--link w-280 fit-content"
+        to="/account/create-new"
+        class="landing-page--link mx-auto fit-content"
       >
         <ButtonForm
-          :title_btn="'Create New Account'"
-          :color_btn="'warning'"
-          :src="'/src/images/bg_btn_warning.png'"
-          :width="'280'"
-          :height="'44'"
-          mx-auto
+          :btnTitle="'Create New Account'"
+          :btnColor="'warning'"
+          :imgSrc="'/src/images/bg_btn_warning.png'"
+          :imgWidth="'280'"
+          :imgHeight="'44'"
         />
       </router-link>
 
@@ -83,28 +83,28 @@ const contacts = [
       display: block;
     }
     .link-contact {
+      position: absolute;
+      bottom: 0;
+
+        width: 100%;
       ul {
         display: flex;
         flex-flow: row wrap;
         justify-content: center;
-        color: $dark-blue !important;
         li:not(:last-child) {
           border-right: 2px solid #b78d5e;
         }
-      }
-    }
-    @include responsive(sm) {
-      .link-contact {
-        width: 100%;
-        position: absolute;
-        bottom: 0;
+        li {
+          a {
+            color: $dark-blue !important;
+          }
+        }
       }
     }
   }
-  .form-field,
-  .landing-page--link {
-    margin: auto;
-    max-width: 280px !important;
+
+  .landing-page--link,
+  .form-field {
     display: block;
   }
 }

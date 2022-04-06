@@ -36,6 +36,9 @@ export default route(function (/* { store, ssrContext } */) {
   })
 
   Router.beforeEach((to, from, next) => {
+    if(Number(LocalStorage.getItem('timeBrowserBlock')) > 0 && to.path != '/browser/block') {
+      next('/browser/block')
+    }
     if (to.path != '/') {
       LocalStorage.set('hideLayout', false)
     } else {

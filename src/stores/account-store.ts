@@ -6,7 +6,7 @@ export const useAccountStore = defineStore('account', {
   state: () => ({
     id: '',
     isLogin: false,
-    token: '',
+    token: ''
   }),
   getters: {
     // setMobileNumber: (state, mb: string) => {
@@ -26,11 +26,18 @@ export const useAccountStore = defineStore('account', {
         mobile_number: mobile_number,
         password: password
       })
-      LocalStorage.set('token', response.data.data.token)
-      this.token = response.data.data.token
-      this.id = response.data.data.user.id
+      if(response.data.data.token) {
+        this.token = response.data.data.token
+        this.id = response.data.data.id
+      }
 
       return { response: response }
+    },
+    // forgot password
+    async accountForgetPassword(mobile_number, OTP, password) {
+      const response =  await api.post('/password/forget', { mobile_number, OTP, password })
+      return { response: response, otp: OTP }
+
     }
   }
 })
