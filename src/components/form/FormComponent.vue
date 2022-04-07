@@ -38,6 +38,22 @@
       </div>
     </div>
 
+    <div class="form-field mt-10 mb-25" v-show="props.useReferralCodeInput">
+      <div class="text-center text-red" @click="toggleRC()" v-if="!showRC">I have a #HYZ2022 referral code</div>
+      <div v-else>
+        <input
+        type="text"
+        class="form-input width-percentage-100"
+        :class="{ 'border-danger': props.errorBorder_RC }"
+        placeholder=" "
+        v-model="referralCode"
+        :maxlength="9"
+        @input="getInput()"
+      />
+      <label for="mobile-number" class="form-label" >Referral Code (optional)</label>
+      </div>
+    </div>
+
     <div class="form-field mt-15 height-45" v-show="props.usePasswordInput">
       <input
         :type="input_type"
@@ -49,7 +65,9 @@
         v-model="password"
         @input="getInput()"
       />
-      <label for="Password" class="form-label">{{ props.titlePasswordInput }}</label>
+      <label for="Password" class="form-label">{{
+        props.titlePasswordInput
+      }}</label>
       <p class="form-btn--showpw" @click="changeType()">
         <q-icon name="mdi-eye-outline" />
       </p>
@@ -59,38 +77,41 @@
       v-show="props.useConfirmPasswordInput"
     >
       <input
-        :type="input_type"
+        :type="input_type2"
         class="form-input form-input--password width-percentage-100"
         :class="{
           'border-danger':
-            props.errorBorder_ConfirmPassword || props.errorBorder_Password
+          props.errorBorder_Password
         }"
         placeholder=" "
         v-model="confirmPassword"
         @input="getInput()"
       />
       <label for="ConFirmPassword" class="form-label">Confirm Password</label>
-      <p class="form-btn--showpw" @click="changeType()">
+      <p class="form-btn--showpw" @click="changeType2()">
         <q-icon name="mdi-eye-outline" />
       </p>
     </div>
 
     <div class="form-field mt-15 height-45" v-show="props.useOTPInput">
       <input
-        type="number"
+        type="text"
+        maxlength="6"
         class="form-input form-input--password width-percentage-100"
         :class="{
           'border-danger': props.errorBorder_OTP
         }"
         placeholder=" "
         v-model="OTP"
-        @input="getInput()"
+        @input="getInput(), changeOTP()"
       />
       <label for="OTP" class="form-label">OTP</label>
       <p class="form-btn--showpw" @click="changeType()">
         <q-icon name="mdi-eye-outline" />
       </p>
     </div>
+
+    <PasswordCheck :password="password" @update="checkBtn" v-show="props.usePasswordCheck" class="mb-15" />
 
     <div class="form-field mt-9 mb-24" v-show="props.useForgotLink">
       <router-link to="/password/forget" class="forgot-link float-right"
@@ -111,16 +132,17 @@
     </div>
 
     <ButtonForm
-        :btnType="'submit'"
-        :btnTitle="props.btnTitle"
-        :btnColor="props.btnColor"
-        class="mb-2 text-center width-percentage-100"
-        :imgSrc="`/src/images/bg_btn_${props.btnColor}.png`"
-        :imgWidth="props.imgWidth"
-        :imgWidthPercent="props.imgWidthPercent"
-        :imgHeight="props.imgHeight"
-        v-show="props.useBtn"
-      />
+      :btnType="'submit'"
+      :btnTitle="props.btnTitle"
+      :btnColor="props.btnColor"
+      class="mb-2 text-center width-percentage-100"
+      :imgSrc="`/src/images/bg_btn_${props.btnColor}.png`"
+      :imgWidth="props.imgWidth"
+      :imgWidthPercent="props.imgWidthPercent"
+      :imgHeight="props.imgHeight"
+      v-show="props.useBtn"
+      :class="{ 'mt-150': props.mt_150 }"
+    />
 
     <a
       :href="props.btnLink"
@@ -183,19 +205,24 @@ import { ref, watchEffect } from 'vue'
 import ButtonForm from './ButtonForm.vue'
 import AlertInfo from './AlertInfo.vue'
 import AlertError from './AlertError.vue'
+import rules from '../../boot/rules'
+import PasswordCheck from '../form/PasswordCheck.vue'
 
 let mobile_number = ref('')
 let number = ref('')
 let password = ref('')
 let confirmPassword = ref('')
-let OTP = ref('')
+let OTP = ref()
+let referralCode = ref()
 let firstNumber = ref('65')
-let input_type = ref('password')
 let showCover = ref(false)
 let showBtnInfo = ref(true)
 let showBtnError = ref(false)
+let input_type = ref('password')
+let input_type2 = ref('password')
+let showRC = ref(false)
 
-
+let checkRules = ref(false)
 
 const props = defineProps({
   titleForm: { value: { value: String, default: '' }, default: '' },
@@ -210,15 +237,19 @@ const props = defineProps({
   useMobileNumberInput: { value: Boolean, default: false },
   errorBorder_MB: { value: Boolean, default: false },
 
+  useReferralCodeInput: { value: Boolean, default: false },
+  errorBorder_RC: { value: Boolean, default: false },
+
   titlePasswordInput: { value: String, default: 'Password' },
   usePasswordInput: { value: Boolean, default: false },
   errorBorder_Password: { value: Boolean, default: false },
 
   useConfirmPasswordInput: { value: Boolean, default: false },
-  errorBorder_ConfirmPassword: { value: Boolean, default: false },
 
   useOTPInput: { value: Boolean, default: false },
   errorBorder_OTP: { value: Boolean, default: false },
+
+  usePasswordCheck: { value: Boolean, default: false },
 
   useForgotLink: { value: Boolean, default: false },
 
@@ -246,14 +277,37 @@ const props = defineProps({
   mt_100: { value: Boolean, default: false },
   mt_150: { value: Boolean, default: false }
 })
-const emit = defineEmits(['submit', 'input'])
+const emit = defineEmits(['submit', 'input', 'update'])
 function submit() {
-  emit('submit', mobile_number.value, password.value, confirmPassword.value, OTP.value)
+  emit(
+    'submit',
+    mobile_number.value,
+    password.value,
+    confirmPassword.value,
+    OTP.value,
+    referralCode.value
+  )
 }
 function getInput() {
-  emit('input', mobile_number.value, password.value, confirmPassword.value, OTP.value)
+  emit(
+    'input',
+    mobile_number.value,
+    password.value,
+    confirmPassword.value,
+    OTP.value,
+    referralCode.value
+  )
+}
+function getUpdate() {
+  emit(
+    'update',
+    checkRules.value
+  )
 }
 // const listFirstNumber = ['65', '84']
+const toggleRC = () => {
+  showRC.value = !showRC.value
+}
 
 const changeNumber = () => {
   if (number.value.length > 8 && number.value.search(' ') == -1) {
@@ -273,6 +327,13 @@ const changeType = () => {
   if (input_type.value === 'password') input_type.value = 'text'
   else input_type.value = 'password'
 }
+const changeType2 = () => {
+  if (input_type2.value === 'password') input_type2.value = 'text'
+  else input_type2.value = 'password'
+}
+const changeOTP = () => {
+  OTP.value = rules.maskNumber(OTP.value)
+}
 
 function loadCover() {
   if (props.titleAlertError == '3timesWrong') {
@@ -281,6 +342,9 @@ function loadCover() {
 }
 const hideCover = () => {
   showCover.value = false
+}
+const checkBtn = (isCheck: boolean) => {
+  checkRules.value = isCheck
 }
 watchEffect(() => {
   // toggle button login
@@ -296,6 +360,9 @@ watchEffect(() => {
     showBtnError.value = false
     showBtnInfo.value = true
   }
+
+  getUpdate()
+
 })
 </script>
 

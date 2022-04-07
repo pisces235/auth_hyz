@@ -21,7 +21,7 @@
       :imgBtnHeight="'44'"
       :useLoginBottom="true"
       :bottomText="'New to the game?'"
-      :bottomLink="'/account/create-new'"
+      :bottomLink="'/signup'"
       :bottomLinkText="'Sign up here'"
       @input="getInput"
       @submit="login"
@@ -102,6 +102,7 @@ function login(mobile_number: string, password: string) {
       }
       if (countInputLoginWrong.value >= 5) {
         LocalStorage.set('timeBrowserBlock', 15)
+        accountStore.titleAlertErrorBlockBrowserPage = 'blockLogin'
         router.push('/browser/block')
       }
     })

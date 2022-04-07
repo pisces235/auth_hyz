@@ -65,21 +65,32 @@
     </div>
     <div
       class="alert-danger mx-auto mb-15 mt-5"
-      v-show="props.titleAlertError == 'blockBrowser'"
+      v-show="props.titleAlertError == 'blockLogin'"
     >
-        <p class="text-xs mt-10 mb-10 pl-5 pr-5 text-center width-percentage-100">
-          Uh oh! You have attempted too many incorrect log ins. Please try again
-          after 5 mins.
-        </p>
+      <p class="text-xs mt-10 mb-10 pl-5 pr-5 text-center width-percentage-100">
+        Uh oh! You have attempted too many incorrect log ins. Please try again
+        after 5 mins.
+      </p>
+    </div>
+    <div
+      class="alert-danger mx-auto mb-15 mt-5"
+      v-show="props.titleAlertError == 'blockAttempts'"
+    >
+      <p class="text-xs mt-10 mb-10 pl-5 pr-5 text-center width-percentage-100">
+        Uh oh! You have too many incorrect attempts. Please try again after 5
+        mins.
+      </p>
     </div>
     <div
       class="alert-danger mx-auto mb-15 mt-5"
       v-show="props.titleAlertError == 'blockAccount'"
     >
-        <p class="text-xs mt-10 mb-10 mr-5 ml-5 text-center mx-auto width-percentage-100">
-          Uh oh! Your account has been locked for security reasons after 5
-          failed login attempts.
-        </p>
+      <p
+        class="text-xs mt-10 mb-10 mr-5 ml-5 text-center mx-auto width-percentage-100"
+      >
+        Uh oh! Your account has been locked for security reasons after 5 failed
+        login attempts.
+      </p>
     </div>
 
     <div
@@ -88,7 +99,7 @@
     >
       <div class="row">
         <img class="little mt-10 ml-10 mr-10" src="../../images/cross.png" />
-        <p class="text-xs mt-10 mb-10 text-center mx-auto">
+        <p class="text-xs mt-10 mb-10 text-left mx-auto">
           This OTP is incorrect or has expired. Please check and try again!
         </p>
       </div>
@@ -99,8 +110,19 @@
     >
       <div class="row">
         <img class="little mt-10 ml-10 mr-10" src="../../images/cross.png" />
-        <p class="text-xs mt-10 mb-10 text-center mx-auto">
+        <p class="text-xs mt-10 mb-10 text-left mx-auto">
           This OTP is incorrect or has expired.
+        </p>
+      </div>
+    </div>
+    <div
+      class="alert-danger mx-auto mb-15 mt-5"
+      v-show="props.titleAlertError == 'passwordNotMatch'"
+    >
+      <div class="row">
+        <img class="little mt-10 ml-10 mr-10" src="../../images/cross.png" />
+        <p class="text-xs mt-10 mb-10 text-left mx-auto">
+          Your passwords do not match.
         </p>
       </div>
     </div>
@@ -113,7 +135,6 @@
 const props = defineProps({
   titleAlertError: { value: String, default: '' }
 })
-
 </script>
 
 <style lang="scss" scoped>
@@ -129,6 +150,7 @@ const props = defineProps({
     border: $red 1px solid;
     border-radius: 10px;
     width: 90%;
+    animation: showAlert 1.5s;
     .row {
       .little {
         width: 16px;
@@ -141,5 +163,13 @@ const props = defineProps({
       }
     }
   }
+}
+@keyframes showAlert {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 </style>

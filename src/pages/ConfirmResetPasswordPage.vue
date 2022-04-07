@@ -9,14 +9,14 @@
       <div class="title absolute-top text-center text-lg">You're all set</div>
     </div>
     <div class="contain-text middle text-center text-alert--danger font-bold">
-      <!-- <p class="mx-auto">
+      <p class="mx-auto">
         You have successfully reset your password.<br />You can now use your new
         password to log in to your account.
-      </p> -->
+      </p>
     </div>
     <div class="image-bottom width-percentage-100 absolute-bottom">
       <img
-        src="../images/Group 19688.png"
+        src="../images/Group 19686.png"
         alt=""
         class="width-percentage-100"
       />
@@ -24,7 +24,7 @@
     <div class="btn-bottom ml-md absolute-bottom mb-md">
       <router-link to="/login" class="mx-auto">
         <ButtonForm
-          :btnTitle="'Start playing!'"
+          :btnTitle="'Login'"
           :btnColor="'danger'"
           class="mb-15 mx-auto"
           :imgSrc="'/src/images/bg_btn_danger.png'"

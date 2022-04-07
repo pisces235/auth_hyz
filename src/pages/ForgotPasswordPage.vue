@@ -1,8 +1,6 @@
 <template>
   <div class="page-content relative-position">
-    <router-link to="/login" class="back-btn">
-      <img src="../images/small.png" class="width-32 height-32" alt="" />
-    </router-link>
+    <img src="../images/small.png" class="width-32 height-32 back-btn" alt="" @click="redirectBtn()" />
     <TitleLoginPage title_page="Forgot Password" class="mt-10" />
     <Form
       class="mx-auto"
@@ -20,11 +18,12 @@
       :imgWidthPercent="'100'"
       @input="getInput"
       @submit="submit"
-      v-show="showForm"
+      v-if="showForm"
     />
 
-    <OTPLimitPage v-show="showForm == false" />
-    {{ data }}
+    <OTPLimitPage :titleAlertError="titleAlertError" v-else />
+    {{ response }} <br>
+    {{data}}
   </div>
 </template>
 
@@ -52,6 +51,7 @@ if (
   )
 }
 let data = ref()
+let response = ref()
 let useMobileNumberInput = ref(true)
 let useOTPInput = ref(false)
 let errorBorder = ref()
@@ -61,6 +61,14 @@ let titleAlertError = ref()
 let showForm = ref(true)
 let mobileNumber = ref('')
 let OTP = ref('')
+
+const redirectBtn = () => {
+  if(showForm.value == true) router.go(-1)
+  else {
+    titleAlertError.value = ''
+    showForm.value = true
+  }
+}
 
 const getInput = (
   mobile_number: string,
@@ -79,23 +87,27 @@ const submit = (
   confirmPassword: string,
   otp: string
 ) => {
-  if (mobileNumber.value.length == 0) {
-    mobileNumber.value = mobile_number
-  } else {
-    mobile_number = mobileNumber.value
+  data.value = {
+    mobile_number: mobile_number,
+    code: otp,
+    password: password
   }
-  OTP.value = otp
   accountStore
-    .accountForgetPassword(mobile_number, otp.toString(), password)
-    .then((response) => {
-      data.value = response.response.data
+    .accountForgetPassword(mobile_number, otp, password)
+    .then((res) => {
+      response.value = res.response
     })
     .catch((error) => {
-      data.value = error.response.data
-
-  console.log(error.otp)
+      response.value = error.response.data
       colorBtn.value = 'info'
-      if (data.value.message.search('Invalid') != -1) {
+
+      if (response.value.message.search('Password') != -1) {
+        accountStore.mobile_number = mobile_number
+        accountStore.otp = otp
+        router.push('/password/reset')
+      }
+
+      if (response.value.message.search('Invalid') != -1) {
         // if invalid mobile number
         errorBorder.value = true // toggle border
         titleAlertError.value = 'invalidMobileNumber'
@@ -104,7 +116,7 @@ const submit = (
           'countInputForgotPasswordWrong',
           countInputForgotPasswordWrong.value
         )
-      } else if (data.value.message.search('account registered') != -1) {
+      } else if (response.value.message.search('account registered') != -1) {
         //if input value not register yet
         errorBorder.value = true
         titleAlertError.value = 'wrongMobileNumber'
@@ -113,25 +125,29 @@ const submit = (
           'countInputForgotPasswordWrong',
           countInputForgotPasswordWrong.value
         )
-      } else if (data.value.message.search('otp') != -1) {
+      } else if (response.value.message.search('otpRequired') != -1) {
+        titleAlertError.value = ''
           titleAlertInfo.value = 'OTP'
           useMobileNumberInput.value = false
           useOTPInput.value = true
-      } else if (data.value.data.failed > 0) {
+      } else if (response.value.data.failed > 0) {
         titleAlertInfo.value = 'OTP'
         useMobileNumberInput.value = false
         useOTPInput.value = true
         titleAlertError.value = 'OTPTryAgain'
-      } else if (data.value.data.info) {
-        router.push('/account/block')
       } else {
-        showForm = ref(false)
+        if(otp != undefined) {
+          titleAlertError.value = 'OTP'
+        }
+        else titleAlertError.value = ''
+        showForm.value = false
       }
       if (countInputForgotPasswordWrong.value == 3) {
         LocalStorage.set('timeBlockBtn', 10)
       }
       if (countInputForgotPasswordWrong.value >= 5) {
         LocalStorage.set('timeBrowserBlock', 15)
+        accountStore.titleAlertErrorBlockBrowserPage = 'blockAttempts'
         router.push('/browser/block')
       }
     })

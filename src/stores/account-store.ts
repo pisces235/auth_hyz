@@ -6,7 +6,11 @@ export const useAccountStore = defineStore('account', {
   state: () => ({
     id: '',
     isLogin: false,
-    token: ''
+    token: '',
+    titleAlertErrorBlockBrowserPage: '',
+    mobile_number: '',
+    otp: '',
+    password: '',
   }),
   getters: {
     // setMobileNumber: (state, mb: string) => {
@@ -26,7 +30,7 @@ export const useAccountStore = defineStore('account', {
         mobile_number: mobile_number,
         password: password
       })
-      if(response.data.data.token) {
+      if (response.data.data.token) {
         this.token = response.data.data.token
         this.id = response.data.data.id
       }
@@ -34,10 +38,26 @@ export const useAccountStore = defineStore('account', {
       return { response: response }
     },
     // forgot password
-    async accountForgetPassword(mobile_number, OTP, password) {
-      const response =  await api.post('/password/forget', { mobile_number, OTP, password })
-      return { response: response, otp: OTP }
+    async accountForgetPassword(mobile_number: string, otp: string, password: string) {
+      const response = await api.post('/password/forget', {
+        mobile_number: mobile_number,
+        code: otp,
+        password: password
+      })
+      return { response }
+    },
+    async accountSignup(mobile_number, password, referralCode) {
+      const response = await api.post('/register', {
+        mobile_number: mobile_number,
+        password: password,
+        referral_code: referralCode,
+      })
+      if (response.data.data.token) {
+        this.token = response.data.data.token
+        this.id = response.data.data.id
+      }
 
-    }
+      return { response: response }
+    },
   }
 })

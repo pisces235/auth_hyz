@@ -3,7 +3,7 @@
     <router-link to="/password/forget" class="back-btn">
       <img src="../images/small.png" class="width-32 height-32" alt="" />
     </router-link>
-    <TitleLoginPage title_page="Create A Password" class="mt-10" />
+    <TitleLoginPage title_page="Set New Password" class="mt-10" />
     <Form
       :useAlertError="true"
       :titleAlertError="titleAlertError"
@@ -38,7 +38,7 @@ const router = useRouter()
 const otp = accountStore.otp
 const mobileNumber = accountStore.mobile_number
 
-if(mobileNumber.length == 0) {
+if( otp.length == 0 || mobileNumber.length == 0) {
   router.go(-1)
 }
 
@@ -49,7 +49,6 @@ let checkRules = ref(false)
 let checkSameInput = ref(false)
 let newPassword = ref('')
 let confirmNewPassword = ref('')
-let referralCode = ref()
 let response = ref()
 
 const getUpdate = (check: boolean) => {
@@ -59,19 +58,16 @@ const getUpdate = (check: boolean) => {
 const getInput = (
   mobile_number: string,
   password: string,
-  confirmPassword: string,
-  otp: string,
-  rc: string
+  confirmPassword: string
 ) => {
   newPassword.value = password
   confirmNewPassword.value = confirmPassword
-  referralCode.value = rc
 }
 const submit = () => {
-  accountStore.accountSignup(mobileNumber, newPassword.value, referralCode.value)
+  accountStore.accountForgetPassword(mobileNumber, otp, newPassword.value)
     .then((res) => {
       response.value = res.response
-      router.push('/password/create-new/confirm')
+      router.push('/password/reset/confirm')
     })
     .catch((error) => {
       response.value = error.response.data

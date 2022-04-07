@@ -1,6 +1,5 @@
 <template>
   <div class="account-block height-viewport-100 mr-ss ml-ss">
-    <TitleLoginPage :title_page="title" class="mt-10" />
     <div
       class="icon-title width-percentage-100 mt-100 row justify-center mb-15"
     >
@@ -8,8 +7,8 @@
     </div>
 
     <FormPage
-      :useErrorAlert="true"
-      :titleAlertError="titleAlertError"
+      :useAlertError="true"
+      :titleAlertError="props.titleAlertError"
       :useLoginBottom="true"
       :useLittleContent="true"
       :littleContent="littleContent"
@@ -32,13 +31,11 @@ import { useRouter } from 'vue-router'
 import TitleLoginPage from '../components/auth-layouts/TitlePage.vue'
 import FormPage from '../components/form/FormComponent.vue'
 
-const store = useLayoutStore()
-
-const title = 'Forgot Password'
-const router = useRouter()
-const titleAlertError = 'blockAccount'
-const littleContent = `You're reached the limit of 5 OTP resend attempts. Please contact Sqkii on Facebook for assistance.`
+const littleContent = 'You\'re reached the limit of 5 OTP resend attempts. Please contact Sqkii on Facebook for assistance.'
 const BtnLinkTitle = 'Contact Sqkii'
+const props = defineProps({
+  titleAlertError: { value: String, default: 'OTP' }
+})
 </script>
 
 <style lang="scss" scoped>

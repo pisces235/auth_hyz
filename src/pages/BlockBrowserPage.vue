@@ -34,6 +34,7 @@
 import { ref, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import { LocalStorage } from 'quasar'
+import { useAccountStore } from '../stores/account-store'
 
 import TitleLoginPage from '../components/auth-layouts/TitlePage.vue'
 import FormPage from '../components/form/FormComponent.vue'
@@ -41,9 +42,11 @@ import ButtonForm from '../components/form/ButtonForm.vue'
 
 const title = 'Browser Blocked!'
 const router = useRouter()
-const titleAlertError = 'blockBrowser'
 const btnTitle = 'Back to log in'
+const accountStore = useAccountStore()
+
 let btnColor = ref('info')
+let titleAlertError = accountStore.titleAlertErrorBlockBrowserPage
 
 
 const countInputLoginWrong = ref()
