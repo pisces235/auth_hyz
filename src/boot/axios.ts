@@ -6,8 +6,7 @@ declare module '@vue/runtime-core' {
     $axios: AxiosInstance
   }
 }
-const token =
-  'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTk1MjE3MDViOGE4ZDZhMzM1YzkyNyIsImlhdCI6MTY0ODEzODM5NSwiaXNzIjoiaHR0cHM6Ly9zcWtpaS5jb20ifQ.Iyc5WqwVCDnVXaymj55MUZPhD878wqAogMq43nY14TgUJen6FaNHLlVKaLnktHE2TVHn23jQIjK6jXAnG2OF-hO3BbXnp18fa5u8rEDcTS5mokwCQbxhucN8Wl4z9hqRkUVqLkvttBbkWQPm1Gila-r17VRbFC8mTT6lGiw6CPQ'
+
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
 // If any client changes this (global) instance, it might be a

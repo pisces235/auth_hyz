@@ -175,7 +175,7 @@
       <div class="cover-alert row">
         <img
           class="little mt-15 ml-15 mr-15 mb-15"
-          src="/images/Smiley_profilepic 1.png"
+          src="/images/Smiley_profilepic1.png"
           alt=""
         />
         <p class="text-sm mt-15 mb-15 w-fit-content">

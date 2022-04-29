@@ -23,7 +23,6 @@
 
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
-import { useLayoutStore } from '../stores/layout-store'
 import { useAccountStore } from '../stores/account-store'
 import { useRouter } from 'vue-router'
 import TitleLoginPage from '../components/auth-layouts/TitlePage.vue'
@@ -35,7 +34,7 @@ const router = useRouter()
 //   checkPass.value = checkFuntion()
 // }
 
-const otp = accountStore.otp
+
 const mobileNumber = accountStore.mobile_number
 
 if (mobileNumber.length == 0) {

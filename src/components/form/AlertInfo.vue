@@ -4,7 +4,7 @@
       class="form-field mb-20 row justify-between"
       v-show="titleAlertInfo === 'mobileNumber'"
     >
-      <img src="/images/Smiley_profilepic 1.png" alt="" />
+      <img src="/images/Smiley_profilepic1.png" alt="" />
       <div class="contain-text fit-content">
         <div class="arrow"></div>
         <p class="text-left text-xs pl-6 pt-10 pb-10 width-percentage-87">
@@ -17,7 +17,7 @@
       class="form-field mb-20 row justify-between"
       v-show="titleAlertInfo === 'OTP'"
     >
-      <img src="/images/Smiley_profilepic 1.png" alt="" />
+      <img src="/images/Smiley_profilepic1.png" alt="" />
       <div class="contain-text row no-wrap">
         <div class="arrow"></div>
         <p class="text-left text-xs pl-6 pt-10 pb-10">
@@ -30,7 +30,7 @@
       class="form-field mb-20 row justify-between"
       v-show="titleAlertInfo === 'signup'"
     >
-      <img src="/images/Smiley_profilepic 1.png" alt="" />
+      <img src="/images/Smiley_profilepic1.png" alt="" />
       <div class="contain-text row no-wrap">
         <div class="arrow"></div>
         <p class="text-left text-xs pl-6 pt-10 pb-10">

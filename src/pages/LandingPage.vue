@@ -68,7 +68,7 @@ const contacts = [
   max-width: 600px;
   min-height: 100vh;
   &_img {
-    background: url('/images/Group 19687.png') no-repeat bottom center;
+    background: url('/images/group19687.png') no-repeat bottom center;
     background-size: auto;
     height: 335px;
   }

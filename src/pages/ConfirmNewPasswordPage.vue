@@ -15,7 +15,7 @@
       </p> -->
     </div>
     <div class="image-bottom width-percentage-100 absolute-bottom">
-      <img src="/images/Group 19688.png" alt="" class="width-percentage-100" />
+      <img src="/images/group19688.png" alt="" class="width-percentage-100" />
     </div>
     <div class="btn-bottom ml-md absolute-bottom mb-md">
       <router-link to="/login" class="mx-auto">

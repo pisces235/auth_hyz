@@ -38,7 +38,6 @@ import { useAccountStore } from '../stores/account-store'
 
 import TitleLoginPage from '../components/auth-layouts/TitlePage.vue'
 import FormPage from '../components/form/FormComponent.vue'
-import ButtonForm from '../components/form/ButtonForm.vue'
 
 const title = 'Browser Blocked!'
 const router = useRouter()
@@ -48,7 +47,6 @@ const accountStore = useAccountStore()
 let btnColor = ref('info')
 let titleAlertError = accountStore.titleAlertErrorBlockBrowserPage
 
-const countInputLoginWrong = ref()
 // const checkLogin = () => {
 //   countInputLoginWrong.value = LocalStorage.getItem('countInputLoginWrong')
 //   if (countInputLoginWrong.value < 5) {

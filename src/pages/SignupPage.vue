@@ -44,7 +44,7 @@ let errorBorder_MB = ref()
 let errorBorder_RC = ref()
 let titleAlertInfo = ref('signup')
 let titleAlertError = ref('')
-let countInputSignupWrong: any = ref(0)
+let countInputSignupWrong = ref(0)
 
 const getInput = (mobile_number: string) => {
   if (mobile_number.length > 2) {

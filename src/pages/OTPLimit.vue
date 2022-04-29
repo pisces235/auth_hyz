@@ -24,11 +24,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useLayoutStore } from '../stores/layout-store'
-import { useRouter } from 'vue-router'
-
-import TitleLoginPage from '../components/auth-layouts/TitlePage.vue'
 import FormPage from '../components/form/FormComponent.vue'
 
 const littleContent =
