@@ -1,7 +1,7 @@
 <template>
   <div class="signup-content relative-position">
     <router-link to="/" class="back-btn">
-      <img src="../images/small.png" class="width-32 height-32" alt="" />
+      <img src="/images/small.png" class="width-32 height-32" alt="" />
     </router-link>
     <TitleLoginPage title_page="Sign Up" class="mt-10" />
     <FormPage
@@ -19,7 +19,7 @@
       :imgBtnWidthPercent="'98'"
       :imgBtnHeight="'44'"
       :useLoginBottom="true"
-      :bottomLink="'/account/create-new'"
+      :bottomLink="'signup'"
       :bottomLinkText="'I don\'t have a Paylah! Account'"
       @input="getInput"
       @submit="signup"
@@ -73,7 +73,10 @@ const signup = (
         titleAlertError.value = 'invalidMobileNumber'
         countInputSignupWrong.value += 1
         LocalStorage.set('countInputSignupWrong', countInputSignupWrong.value)
-      } else if(data.value.info == 'invalid_password' || data.value.message.search('Password') != -1) {
+      } else if (
+        data.value.info == 'invalid_password' ||
+        data.value.message.search('Password') != -1
+      ) {
         accountStore.mobile_number = mobile_number
         router.push('/password/create-new')
       }

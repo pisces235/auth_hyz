@@ -14,19 +14,16 @@
           :btnTitle="'Login To My Account'"
           :btnColor="'danger'"
           class="mb-2"
-          :imgSrc="'/src/images/bg_btn_danger.png'"
+          :imgSrc="'/images/bg_btn_danger.png'"
           :imgWidth="'280'"
           :imgHeight="'44'"
         />
       </router-link>
-      <router-link
-        to="/account/create-new"
-        class="landing-page--link mx-auto fit-content"
-      >
+      <router-link to="/signup" class="landing-page--link mx-auto fit-content">
         <ButtonForm
           :btnTitle="'Create New Account'"
           :btnColor="'warning'"
-          :imgSrc="'/src/images/bg_btn_warning.png'"
+          :imgSrc="'/images/bg_btn_warning.png'"
           :imgWidth="'280'"
           :imgHeight="'44'"
         />
@@ -71,7 +68,7 @@ const contacts = [
   max-width: 600px;
   min-height: 100vh;
   &_img {
-    background: url('../images/Group 19687.png') no-repeat bottom center;
+    background: url('/images/Group 19687.png') no-repeat bottom center;
     background-size: auto;
     height: 335px;
   }
@@ -86,7 +83,7 @@ const contacts = [
       position: absolute;
       bottom: 0;
 
-        width: 100%;
+      width: 100%;
       ul {
         display: flex;
         flex-flow: row wrap;

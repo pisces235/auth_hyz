@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { api } from '../boot/axios'
-import { LocalStorage } from 'quasar'
+// import { LocalStorage } from 'quasar'
 
 export const useAccountStore = defineStore('account', {
   state: () => ({

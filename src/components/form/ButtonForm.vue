@@ -1,29 +1,46 @@
+<script setup lang="ts">
+
+interface Props {
+  btnType?:string ,
+  btnTitle?:string,
+  btnColor?:string,
+  imgSrc?:string,
+  imgBtnWidth?:string,
+  imgBtnWidthPercent?:string,
+  imgBtnHeight?:string
+}
+
+withDefaults(defineProps<Props>(), {
+  imgBtnWidthPercent: ''
+})
+</script>
+
 <template>
   <div class="form-field row justify-center">
     <button
       class="btn relative-position justify-center"
       :class="{
-        danger: props.btnColor == 'danger',
-        warning: props.btnColor == 'warning',
-        info: props.btnColor == 'info'
+        danger: btnColor == 'danger',
+        warning: btnColor == 'warning',
+        info: btnColor == 'info'
       }"
-      :type="props.btnType"
+      :type="btnType"
     >
       <img
-        :src="props.imgSrc"
+        :src="imgSrc"
         alt=""
         :class="
           'width-' +
-          props.imgWidth +
+          imgBtnWidth +
           ' height-' +
-          props.imgHeight +
+          imgBtnHeight +
           ' width-percentage-' +
-          props.imgWidthPercent
+          imgBtnWidthPercent
         "
         class="mx-auto"
       />
       <div class="btn-title absolute-top text-center">
-        {{ props.btnTitle }}
+        {{ btnTitle }}
         <!-- <span
           v-show="
             LocalStorage.getItem('countInputLoginWrong') == 3 &&
@@ -35,39 +52,6 @@
     </button>
   </div>
 </template>
-
-<script setup lang="ts">
-// import { onMounted, ref, watchEffect } from 'vue'
-import { LocalStorage } from 'quasar'
-
-// const countDown = () => {
-//   let timer = ref(LocalStorage.getItem('timeBlockBtn'))
-//   let interval = setInterval(() => {
-//     if (timer.value === 0) {
-//       clearInterval(interval)
-//     } else {
-//       timer.value = Number(timer.value) - 1
-//       LocalStorage.set('timeBlockBtn', Number(timer.value))
-//     }
-//   }, 1000)
-//   return timer.value
-// }
-// let timer = ref()
-// watchEffect(() => {
-//   if(LocalStorage.getItem('countInputLoginWrong') == 3)
-//     timer.value = countDown()
-// })
-
-const props = defineProps({
-  btnType: { value: String, default: null },
-  btnTitle: String,
-  btnColor: String,
-  imgSrc: String,
-  imgWidth: String,
-  imgWidthPercent: String,
-  imgHeight: String
-})
-</script>
 
 <style lang="scss" scoped>
 @import '../../css/app.scss';

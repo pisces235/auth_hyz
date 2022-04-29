@@ -4,7 +4,7 @@
     <div
       class="icon-title width-percentage-100 mt-100 row justify-center mb-15"
     >
-      <img class="big" src="../images/cross.png" />
+      <img class="big" src="/images/cross.png" />
     </div>
 
     <FormPage

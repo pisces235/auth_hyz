@@ -6,27 +6,21 @@
   >
     <div
       class="form-title text-lg font-bold mt-20"
-      v-show="props.titleForm != 'undefined' && props.useTitle == true"
-      :class="{ 'mb-25': props.titleAlertError === '' }"
+      v-show="titleForm != 'undefined' && useTitle == true"
+      :class="{ 'mb-25': titleAlertError === '' }"
     >
-      <p>{{ props.titleForm }}</p>
+      <p>{{ titleForm }}</p>
     </div>
 
-    <AlertInfo
-      v-show="props.useAlertInfo"
-      :titleAlertInfo="props.titleAlertInfo"
-    />
+    <AlertInfo v-show="useAlertInfo" :titleAlertInfo="titleAlertInfo" />
 
-    <AlertError
-      v-show="props.useAlertError"
-      :titleAlertError="props.titleAlertError"
-    />
+    <AlertError v-show="useAlertError" :titleAlertError="titleAlertError" />
 
-    <div class="form-field" v-show="props.useMobileNumberInput">
+    <div class="form-field" v-show="useMobileNumberInput">
       <input
         type="text"
         class="form-input form-input--text width-percentage-100"
-        :class="{ 'border-danger': props.errorBorder_MB }"
+        :class="{ 'border-danger': errorBorder_MB }"
         placeholder=" "
         v-model="number"
         :maxlength="9"
@@ -38,50 +32,48 @@
       </div>
     </div>
 
-    <div class="form-field mt-10 mb-25" v-show="props.useReferralCodeInput">
-      <div class="text-center text-red" @click="toggleRC()" v-if="!showRC">I have a #HYZ2022 referral code</div>
+    <div class="form-field mt-10 mb-25" v-show="useReferralCodeInput">
+      <div class="text-center text-red" @click="toggleRC()" v-if="!showRC">
+        I have a #HYZ2022 referral code
+      </div>
       <div v-else>
         <input
-        type="text"
-        class="form-input width-percentage-100"
-        :class="{ 'border-danger': props.errorBorder_RC }"
-        placeholder=" "
-        v-model="referralCode"
-        :maxlength="9"
-        @input="getInput()"
-      />
-      <label for="mobile-number" class="form-label" >Referral Code (optional)</label>
+          type="text"
+          class="form-input width-percentage-100"
+          :class="{ 'border-danger': errorBorder_RC }"
+          placeholder=" "
+          v-model="referralCode"
+          :maxlength="9"
+          @input="getInput()"
+        />
+        <label for="mobile-number" class="form-label"
+          >Referral Code (optional)</label
+        >
       </div>
     </div>
 
-    <div class="form-field mt-15 height-45" v-show="props.usePasswordInput">
+    <div class="form-field mt-15 height-45" v-show="usePasswordInput">
       <input
         :type="input_type"
         class="form-input form-input--password width-percentage-100"
         :class="{
-          'border-danger': props.errorBorder_Password || props.errorBorder_MB
+          'border-danger': errorBorder_Password || errorBorder_MB
         }"
         placeholder=" "
         v-model="password"
         @input="getInput()"
       />
-      <label for="Password" class="form-label">{{
-        props.titlePasswordInput
-      }}</label>
+      <label for="Password" class="form-label">{{ titlePasswordInput }}</label>
       <p class="form-btn--showpw" @click="changeType()">
         <q-icon name="mdi-eye-outline" />
       </p>
     </div>
-    <div
-      class="form-field mt-15 height-45"
-      v-show="props.useConfirmPasswordInput"
-    >
+    <div class="form-field mt-15 height-45" v-show="useConfirmPasswordInput">
       <input
         :type="input_type2"
         class="form-input form-input--password width-percentage-100"
         :class="{
-          'border-danger':
-          props.errorBorder_Password
+          'border-danger': errorBorder_Password
         }"
         placeholder=" "
         v-model="confirmPassword"
@@ -93,13 +85,13 @@
       </p>
     </div>
 
-    <div class="form-field mt-15 height-45" v-show="props.useOTPInput">
+    <div class="form-field mt-15 height-45" v-show="useOTPInput">
       <input
         type="text"
         maxlength="6"
         class="form-input form-input--password width-percentage-100"
         :class="{
-          'border-danger': props.errorBorder_OTP
+          'border-danger': errorBorder_OTP
         }"
         placeholder=" "
         v-model="OTP"
@@ -111,9 +103,14 @@
       </p>
     </div>
 
-    <PasswordCheck :password="password" @update="checkBtn" v-show="props.usePasswordCheck" class="mb-15" />
+    <PasswordCheck
+      :password="password"
+      @update="checkBtn"
+      v-show="usePasswordCheck"
+      class="mb-15"
+    />
 
-    <div class="form-field mt-9 mb-24" v-show="props.useForgotLink">
+    <div class="form-field mt-9 mb-24" v-show="useForgotLink">
       <router-link to="/password/forget" class="forgot-link float-right"
         >Forgot Password?</router-link
       >
@@ -126,47 +123,47 @@
 
     <div
       class="little-content mt-20 mb-10 text-center"
-      v-show="props.useLittleContent"
+      v-show="useLittleContent"
     >
-      <p>{{ props.littleContent }}</p>
+      <p>{{ littleContent }}</p>
     </div>
 
     <ButtonForm
-      :btnType="'submit'"
-      :btnTitle="props.btnTitle"
-      :btnColor="props.btnColor"
+      btnType="submit"
+      :btnTitle="btnTitle"
+      :btnColor="btnColor"
       class="mb-2 text-center width-percentage-100"
-      :imgSrc="`/src/images/bg_btn_${props.btnColor}.png`"
-      :imgWidth="props.imgWidth"
-      :imgWidthPercent="props.imgWidthPercent"
-      :imgHeight="props.imgHeight"
-      v-show="props.useBtn"
-      :class="{ 'mt-150': props.mt_150 }"
+      :imgSrc="`/images/bg_btn_${btnColor}.png`"
+      :imgBtnWidth="imgBtnWidth"
+      :imgBtnWidthPercent="imgBtnWidthPercent"
+      :imgBtnHeight="imgBtnHeight"
+      v-if="useBtn"
+      :class="{ 'mt-150': mt_150 }"
     />
 
     <a
-      :href="props.btnLink"
-      v-show="props.useBtnLink"
-      :class="{ 'mt-150': props.mt_150 }"
+      :href="btnLink"
+      v-show="useBtnLink && btnLinkColor"
+      :class="{ 'mt-150': mt_150 }"
     >
       <ButtonForm
-        :btnType="'submit'"
-        :btnTitle="props.btnLinkTitle"
-        :btnColor="props.btnLinkColor"
+        btnType="submit"
+        :btnTitle="btnLinkTitle"
+        :btnColor="btnLinkColor"
         class="mb-2 text-center width-percentage-100"
-        :imgSrc="`/src/images/bg_btn_${props.btnLinkColor}.png`"
-        :imgWidth="props.imgWidth"
-        :imgWidthPercent="props.imgWidthPercent"
-        :imgHeight="props.imgHeight"
+        :imgSrc="`/images/bg_btn_${btnLinkColor}.png`"
+        :imgBtnWidth="imgBtnWidth"
+        :imgBtnWidthPercent="imgBtnWidthPercent"
+        :imgBtnHeight="imgBtnHeight"
       />
     </a>
 
-    <div class="form-field" v-show="props.useLoginBottom">
+    <div class="form-field" v-show="useLoginBottom">
       <hr class="mx-auto mb-10 mt-3" />
       <div class="signup-contain text-center">
-        <div class="text">{{ props.bottomText }}</div>
-        <router-link :to="props.bottomLink" class="signup-link"
-          ><span>{{ props.bottomLinkText }}</span
+        <div class="text">{{ bottomText }}</div>
+        <router-link :to="bottomLink" class="signup-link"
+          ><span>{{ bottomLinkText }}</span
           >.</router-link
         >
       </div>
@@ -178,7 +175,7 @@
       <div class="cover-alert row">
         <img
           class="little mt-15 ml-15 mr-15 mb-15"
-          src="../../images/Smiley_profilepic 1.png"
+          src="/images/Smiley_profilepic 1.png"
           alt=""
         />
         <p class="text-sm mt-15 mb-15 w-fit-content">
@@ -206,7 +203,7 @@ import ButtonForm from './ButtonForm.vue'
 import AlertInfo from './AlertInfo.vue'
 import AlertError from './AlertError.vue'
 import rules from '../../boot/rules'
-import PasswordCheck from '../form/PasswordCheck.vue'
+import PasswordCheck from './PasswordCheck.vue'
 
 let mobile_number = ref('')
 let number = ref('')
@@ -224,58 +221,112 @@ let showRC = ref(false)
 
 let checkRules = ref(false)
 
-const props = defineProps({
-  titleForm: { value: { value: String, default: '' }, default: '' },
-  useTitle: { useTitle: Boolean, default: false },
+interface Props {
+  useTitle?: boolean
+  titleForm?: string
 
-  useAlertInfo: { value: Boolean, default: false },
-  titleAlertInfo: { value: String, default: '' },
+  useAlertError?: boolean
+  titleAlertError?: string
 
-  useAlertError: { value: Boolean, default: false },
-  titleAlertError: { value: String, default: '' },
+  useAlertInfo?: boolean
+  titleAlertInfo?: string
 
-  useMobileNumberInput: { value: Boolean, default: false },
-  errorBorder_MB: { value: Boolean, default: false },
+  useMobileNumberInput?: boolean
+  errorBorder_MB?: boolean
 
-  useReferralCodeInput: { value: Boolean, default: false },
-  errorBorder_RC: { value: Boolean, default: false },
+  useReferralCodeInput?: boolean
+  errorBorder_RC?: boolean
 
-  titlePasswordInput: { value: String, default: 'Password' },
-  usePasswordInput: { value: Boolean, default: false },
-  errorBorder_Password: { value: Boolean, default: false },
+  usePasswordInput?: boolean
+  titlePasswordInput?: string
+  errorBorder_Password?: boolean
 
-  useConfirmPasswordInput: { value: Boolean, default: false },
+  useConfirmPasswordInput?: boolean
 
-  useOTPInput: { value: Boolean, default: false },
-  errorBorder_OTP: { value: Boolean, default: false },
+  useOTPInput?: boolean
+  errorBorder_OTP?: boolean
 
-  usePasswordCheck: { value: Boolean, default: false },
+  usePasswordCheck?: boolean
 
-  useForgotLink: { value: Boolean, default: false },
+  useForgotLink?: boolean
 
-  useLittleContent: { value: Boolean, default: false },
-  littleContent: { value: String, default: '' },
+  useLittleContent?: boolean
+  littleContent?: string
 
-  useBtn: { value: Boolean, default: false },
-  btnTitle: { value: String, default: '' },
-  btnColor: { value: String, default: '' },
+  useBtn?: boolean
+  btnTitle?: string
+  btnColor?: string
 
-  useBtnLink: { value: Boolean, default: false },
-  btnLinkTitle: { value: String, default: '' },
-  btnLinkColor: { value: String, default: '' },
-  btnLink: { value: String, default: '' },
+  useBtnLink?: boolean
+  btnLinkTitle?: string
+  btnLinkColor?: string
+  btnLink?: string
 
-  imgBtnWidth: { value: String, default: null },
-  imgBtnWidthPercent: { value: String, default: null },
-  imgBtnHeight: { value: String, default: null },
+  imgBtnWidth?: string
+  imgBtnWidthPercent?: string
+  imgBtnHeight?: string
 
-  useLoginBottom: { value: Boolean, default: false },
-  bottomText: { value: String, default: '' },
-  bottomLink: { value: String, default: '' },
-  bottomLinkText: { value: String, default: '' },
+  useLoginBottom?: boolean
+  bottomText?: string
+  bottomLink?: string
+  bottomLinkText?: string
 
-  mt_100: { value: Boolean, default: false },
-  mt_150: { value: Boolean, default: false }
+  mt_100?: boolean
+  mt_150?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  titleForm: '',
+  useTitle: false,
+
+  useAlertInfo: false,
+  titleAlertInfo: '',
+
+  useAlertError: false,
+  titleAlertError: '',
+
+  useMobileNumberInput: false,
+  errorBorder_MB: false,
+
+  useReferralCodeInput: false,
+  errorBorder_RC: false,
+
+  titlePasswordInput: 'Password',
+  usePasswordInput: false,
+  errorBorder_Password: false,
+
+  useConfirmPasswordInput: false,
+
+  useOTPInput: false,
+  errorBorder_OTP: false,
+
+  usePasswordCheck: false,
+
+  useForgotLink: false,
+
+  useLittleContent: false,
+  littleContent: '',
+
+  useBtn: false,
+  btnTitle: '',
+  btnColor: 'info',
+
+  useBtnLink: false,
+  btnLinkTitle: '',
+  btnLinkColor: 'info',
+  btnLink: '',
+
+  imgBtnWidth: '',
+  imgBtnWidthPercent: '',
+  imgBtnHeight: '',
+
+  useLoginBottom: false,
+  bottomText: '',
+  bottomLink: '',
+  bottomLinkText: '',
+
+  mt_100: false,
+  mt_150: false
 })
 const emit = defineEmits(['submit', 'input', 'update'])
 function submit() {
@@ -299,10 +350,7 @@ function getInput() {
   )
 }
 function getUpdate() {
-  emit(
-    'update',
-    checkRules.value
-  )
+  emit('update', checkRules.value)
 }
 // const listFirstNumber = ['65', '84']
 const toggleRC = () => {
@@ -362,7 +410,6 @@ watchEffect(() => {
   }
 
   getUpdate()
-
 })
 </script>
 

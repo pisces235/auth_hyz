@@ -1,7 +1,7 @@
 <template>
   <div class="page-content relative-position">
     <router-link to="/password/forget" class="back-btn">
-      <img src="../images/small.png" class="width-32 height-32" alt="" />
+      <img src="/images/small.png" class="width-32 height-32" alt="" />
     </router-link>
     <TitleLoginPage title_page="Create A Password" class="mt-10" />
     <Form
@@ -38,7 +38,7 @@ const router = useRouter()
 const otp = accountStore.otp
 const mobileNumber = accountStore.mobile_number
 
-if(mobileNumber.length == 0) {
+if (mobileNumber.length == 0) {
   router.go(-1)
 }
 
@@ -68,7 +68,8 @@ const getInput = (
   referralCode.value = rc
 }
 const submit = () => {
-  accountStore.accountSignup(mobileNumber, newPassword.value, referralCode.value)
+  accountStore
+    .accountSignup(mobileNumber, newPassword.value, referralCode.value)
     .then((res) => {
       response.value = res.response
       router.push('/password/create-new/confirm')
@@ -97,7 +98,7 @@ watchEffect(() => {
     errorBorder_Password.value = false
   }
 
-  if (checkSameInput.value == true && checkRules.value == true){
+  if (checkSameInput.value == true && checkRules.value == true) {
     errorBorder_Password.value = false
     btnColor.value = 'danger'
   }

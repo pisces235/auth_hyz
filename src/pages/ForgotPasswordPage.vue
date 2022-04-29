@@ -1,9 +1,13 @@
 <template>
   <div class="page-content relative-position">
-    <img src="../images/small.png" class="width-32 height-32 back-btn" alt="" @click="redirectBtn()" />
+    <img
+      src="/images/small.png"
+      class="width-32 height-32 back-btn"
+      alt=""
+      @click="redirectBtn()"
+    />
     <TitleLoginPage title_page="Forgot Password" class="mt-10" />
     <Form
-      class="mx-auto"
       :useAlertInfo="true"
       :titleAlertInfo="titleAlertInfo"
       :useAlertError="true"
@@ -15,15 +19,15 @@
       :btnTitle="'Next'"
       :btnColor="colorBtn"
       :mt_150="true"
-      :imgWidthPercent="'100'"
+      :imgBtnWidthPercent="'100'"
       @input="getInput"
       @submit="submit"
       v-if="showForm"
     />
 
     <OTPLimitPage :titleAlertError="titleAlertError" v-else />
-    {{ response }} <br>
-    {{data}}
+    {{ response }} <br />
+    {{ data }}
   </div>
 </template>
 
@@ -32,7 +36,7 @@ import Form from '../components/form/FormComponent.vue'
 import TitleLoginPage from '../components/auth-layouts/TitlePage.vue'
 import OTPLimitPage from './OTPLimit.vue'
 
-import { ref, watchEffect } from 'vue'
+import { ref } from 'vue'
 import { useAccountStore } from '../stores/account-store'
 import { useRouter } from 'vue-router'
 import { LocalStorage } from 'quasar'
@@ -40,14 +44,14 @@ import { LocalStorage } from 'quasar'
 const accountStore = useAccountStore()
 const router = useRouter()
 
-let countInputForgotPasswordWrong: any = ref(0)
+let countInputForgotPasswordWrong = ref(0)
 if (
   typeof LocalStorage.getItem('countInputForgotPasswordWrong') === undefined
 ) {
   LocalStorage.set('countInputForgotPasswordWrong', 0)
 } else {
-  countInputForgotPasswordWrong.value = LocalStorage.getItem(
-    'countInputForgotPasswordWrong'
+  countInputForgotPasswordWrong.value = Number(
+    LocalStorage.getItem('countInputForgotPasswordWrong')
   )
 }
 let data = ref()
@@ -59,11 +63,11 @@ let colorBtn = ref('info')
 let titleAlertInfo = ref('mobileNumber')
 let titleAlertError = ref()
 let showForm = ref(true)
-let mobileNumber = ref('')
-let OTP = ref('')
+// let mobileNumber = ref('')
+// let OTP = ref('')
 
 const redirectBtn = () => {
-  if(showForm.value == true) router.go(-1)
+  if (showForm.value == true) router.go(-1)
   else {
     titleAlertError.value = ''
     showForm.value = true
@@ -127,19 +131,18 @@ const submit = (
         )
       } else if (response.value.message.search('otpRequired') != -1) {
         titleAlertError.value = ''
-          titleAlertInfo.value = 'OTP'
-          useMobileNumberInput.value = false
-          useOTPInput.value = true
+        titleAlertInfo.value = 'OTP'
+        useMobileNumberInput.value = false
+        useOTPInput.value = true
       } else if (response.value.data.failed > 0) {
         titleAlertInfo.value = 'OTP'
         useMobileNumberInput.value = false
         useOTPInput.value = true
         titleAlertError.value = 'OTPTryAgain'
       } else {
-        if(otp != undefined) {
+        if (otp != undefined) {
           titleAlertError.value = 'OTP'
-        }
-        else titleAlertError.value = ''
+        } else titleAlertError.value = ''
         showForm.value = false
       }
       if (countInputForgotPasswordWrong.value == 3) {

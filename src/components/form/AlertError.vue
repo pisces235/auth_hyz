@@ -1,11 +1,21 @@
+<script setup lang="ts">
+interface Props {
+  titleAlertError?: string
+}
+
+withDefaults(defineProps<Props>(), {
+  titleAlertError: ''
+})
+</script>
+
 <template>
   <div class="alert--error width-percentage-100">
     <div
       class="alert-danger mx-auto mb-15 mt-5"
-      v-show="props.titleAlertError == 'wrongMobileNumber'"
+      v-show="titleAlertError == 'wrongMobileNumber'"
     >
       <div class="row">
-        <img class="little mt-10 ml-10 mr-10" src="../../images/cross.png" />
+        <img class="little mt-10 ml-10 mr-10" src="/images/cross.png" />
         <p class="text-xs mt-10 mb-10">
           Hm... There isn’t an account registered with the number you’ve
           entered. Please check and try again!
@@ -14,10 +24,10 @@
     </div>
     <div
       class="alert-danger mx-auto mb-15 mt-5"
-      v-show="props.titleAlertError == 'invalidMobileNumber'"
+      v-show="titleAlertError == 'invalidMobileNumber'"
     >
       <div class="row">
-        <img class="little mt-10 ml-10 mr-10" src="../../images/cross.png" />
+        <img class="little mt-10 ml-10 mr-10" src="/images/cross.png" />
         <p class="text-xs mt-10 mb-10">
           Hm... First number input must be 8 or 9 and Mobile Number at least
           eight characters, please try again!
@@ -26,10 +36,10 @@
     </div>
     <div
       class="alert-danger mx-auto mb-15 mt-5"
-      v-show="props.titleAlertError == 'wrongPassword'"
+      v-show="titleAlertError == 'wrongPassword'"
     >
       <div class="row">
-        <img class="little mt-10 ml-10 mr-10" src="../../images/cross.png" />
+        <img class="little mt-10 ml-10 mr-10" src="/images/cross.png" />
         <p class="text-xs mt-10 mb-10">
           Hm... Looks like this isn’t the correct password. Please try again.
         </p>
@@ -37,10 +47,10 @@
     </div>
     <div
       class="alert-danger mx-auto mb-15 mt-5"
-      v-show="props.titleAlertError == '3timesWrong'"
+      v-show="titleAlertError == '3timesWrong'"
     >
       <div class="row">
-        <img class="little mt-10 ml-10 mr-10" src="../../images/cross.png" />
+        <img class="little mt-10 ml-10 mr-10" src="/images/cross.png" />
         <p class="text-xs mt-10 mb-10">
           You’ve entered an incorrect password. You have
           <b>2 more attempts</b>
@@ -51,10 +61,10 @@
     </div>
     <div
       class="alert-danger mx-auto mb-15 mt-5"
-      v-show="props.titleAlertError == '4timesWrong'"
+      v-show="titleAlertError == '4timesWrong'"
     >
       <div class="row">
-        <img class="little mt-10 ml-10 mr-10" src="../../images/cross.png" />
+        <img class="little mt-10 ml-10 mr-10" src="/images/cross.png" />
         <p class="text-xs mt-10 mb-10">
           You’ve entered an incorrect password. You have
           <b>1 more attempts</b>
@@ -65,7 +75,7 @@
     </div>
     <div
       class="alert-danger mx-auto mb-15 mt-5"
-      v-show="props.titleAlertError == 'blockLogin'"
+      v-show="titleAlertError == 'blockLogin'"
     >
       <p class="text-xs mt-10 mb-10 pl-5 pr-5 text-center width-percentage-100">
         Uh oh! You have attempted too many incorrect log ins. Please try again
@@ -74,7 +84,7 @@
     </div>
     <div
       class="alert-danger mx-auto mb-15 mt-5"
-      v-show="props.titleAlertError == 'blockAttempts'"
+      v-show="titleAlertError == 'blockAttempts'"
     >
       <p class="text-xs mt-10 mb-10 pl-5 pr-5 text-center width-percentage-100">
         Uh oh! You have too many incorrect attempts. Please try again after 5
@@ -83,7 +93,7 @@
     </div>
     <div
       class="alert-danger mx-auto mb-15 mt-5"
-      v-show="props.titleAlertError == 'blockAccount'"
+      v-show="titleAlertError == 'blockAccount'"
     >
       <p
         class="text-xs mt-10 mb-10 mr-5 ml-5 text-center mx-auto width-percentage-100"
@@ -95,10 +105,10 @@
 
     <div
       class="alert-danger mx-auto mb-15 mt-5"
-      v-show="props.titleAlertError == 'OTPTryAgain'"
+      v-show="titleAlertError == 'OTPTryAgain'"
     >
       <div class="row">
-        <img class="little mt-10 ml-10 mr-10" src="../../images/cross.png" />
+        <img class="little mt-10 ml-10 mr-10" src="/images/cross.png" />
         <p class="text-xs mt-10 mb-10 text-left mx-auto">
           This OTP is incorrect or has expired. Please check and try again!
         </p>
@@ -106,10 +116,10 @@
     </div>
     <div
       class="alert-danger mx-auto mb-15 mt-5"
-      v-show="props.titleAlertError == 'OTP'"
+      v-show="titleAlertError == 'OTP'"
     >
       <div class="row">
-        <img class="little mt-10 ml-10 mr-10" src="../../images/cross.png" />
+        <img class="little mt-10 ml-10 mr-10" src="/images/cross.png" />
         <p class="text-xs mt-10 mb-10 text-left mx-auto">
           This OTP is incorrect or has expired.
         </p>
@@ -117,10 +127,10 @@
     </div>
     <div
       class="alert-danger mx-auto mb-15 mt-5"
-      v-show="props.titleAlertError == 'passwordNotMatch'"
+      v-show="titleAlertError == 'passwordNotMatch'"
     >
       <div class="row">
-        <img class="little mt-10 ml-10 mr-10" src="../../images/cross.png" />
+        <img class="little mt-10 ml-10 mr-10" src="/images/cross.png" />
         <p class="text-xs mt-10 mb-10 text-left mx-auto">
           Your passwords do not match.
         </p>
@@ -128,14 +138,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-// import { LocalStorage } from 'quasar'
-
-const props = defineProps({
-  titleAlertError: { value: String, default: '' }
-})
-</script>
 
 <style lang="scss" scoped>
 @import '../../css/app.scss';
@@ -165,11 +167,11 @@ const props = defineProps({
   }
 }
 @keyframes showAlert {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

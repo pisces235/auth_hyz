@@ -9,20 +9,17 @@
           name="mdi-checkbox-blank-circle-outline mb-5"
           v-if="password.length == 0"
         />
-        <img src="../../images/cross.png" v-else-if="!check_min_length" />
-        <img src="../../images/tick.png" v-else />
+        <img src="/images/cross.png" v-else-if="!check_min_length" />
+        <img src="/images/tick.png" v-else />
         At least 8 characters
       </div>
-      <div
-        class="include-number mt-5 mb-5"
-        :class="{ access: include_number }"
-      >
+      <div class="include-number mt-5 mb-5" :class="{ access: include_number }">
         <q-icon
           name="mdi-checkbox-blank-circle-outline mb-5"
           v-if="password.length == 0"
         />
-        <img src="../../images/cross.png" v-else-if="!include_number" />
-        <img src="../../images/tick.png" v-else />
+        <img src="/images/cross.png" v-else-if="!include_number" />
+        <img src="/images/tick.png" v-else />
         At least 1 digit (0-9)
       </div>
       <div
@@ -33,8 +30,8 @@
           name="mdi-checkbox-blank-circle-outline mb-5"
           v-if="password.length == 0"
         />
-        <img src="../../images/cross.png" v-else-if="!include_lower" />
-        <img src="../../images/tick.png" v-else />
+        <img src="/images/cross.png" v-else-if="!include_lower" />
+        <img src="/images/tick.png" v-else />
         At least 1 lowercase (a-z)
       </div>
       <div
@@ -45,8 +42,8 @@
           name="mdi-checkbox-blank-circle-outline mb-5"
           v-if="password.length == 0"
         />
-        <img src="../../images/cross.png" v-else-if="!include_upper" />
-        <img src="../../images/tick.png" v-else />
+        <img src="/images/cross.png" v-else-if="!include_upper" />
+        <img src="/images/tick.png" v-else />
         At least 1 uppercase (A-Z)
       </div>
       <div
@@ -57,8 +54,8 @@
           name="mdi-checkbox-blank-circle-outline mb-5"
           v-if="password.length == 0"
         />
-        <img src="../../images/cross.png" v-else-if="!include_special" />
-        <img src="../../images/tick.png" v-else />
+        <img src="/images/cross.png" v-else-if="!include_special" />
+        <img src="/images/tick.png" v-else />
         At least 1 special character
       </div>
     </div>
@@ -81,7 +78,6 @@ let include_lower = ref(false)
 let include_upper = ref(false)
 let include_special = ref(false)
 let checkRules = ref(false)
-let isNotTheSame = ref(false)
 
 watchEffect(() => {
   password.value = props.password

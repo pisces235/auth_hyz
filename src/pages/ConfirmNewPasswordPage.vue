@@ -2,7 +2,7 @@
   <div class="container width-percentage-100 relative-position mx-auto">
     <div class="img-top">
       <img
-        src="../images/curve.png"
+        src="/images/curve.png"
         alt=""
         class="width-percentage-100 mt-25 z-10"
       />
@@ -15,11 +15,7 @@
       </p> -->
     </div>
     <div class="image-bottom width-percentage-100 absolute-bottom">
-      <img
-        src="../images/Group 19688.png"
-        alt=""
-        class="width-percentage-100"
-      />
+      <img src="/images/Group 19688.png" alt="" class="width-percentage-100" />
     </div>
     <div class="btn-bottom ml-md absolute-bottom mb-md">
       <router-link to="/login" class="mx-auto">
@@ -27,7 +23,7 @@
           :btnTitle="'Start playing!'"
           :btnColor="'danger'"
           class="mb-15 mx-auto"
-          :imgSrc="'/src/images/bg_btn_danger.png'"
+          :imgSrc="'/images/bg_btn_danger.png'"
           :imgWidth="'280'"
           :imgHeight="'44'"
         />
@@ -57,7 +53,7 @@ import ButtonForm from '../components/form/ButtonForm.vue'
     }
   }
   .contain-text {
-    background: url('../images/fireworks.png') center top no-repeat;
+    background: url('/images/fireworks.png') center top no-repeat;
     height: 160px;
     background-size: auto;
     display: block;
@@ -76,7 +72,7 @@ import ButtonForm from '../components/form/ButtonForm.vue'
   @include form;
   .btn-bottom {
     a {
-      display:block;
+      display: block;
       width: fit-content;
     }
   }

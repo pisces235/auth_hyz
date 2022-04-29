@@ -1,7 +1,7 @@
 <template>
   <div class="login-content relative-position">
     <router-link to="/" class="back-btn">
-      <img src="../images/small.png" class="width-32 height-32" alt="" />
+      <img src="/images/small.png" class="width-32 height-32" alt="" />
     </router-link>
     <TitleLoginPage title_page="Login" class="mt-10" />
     <FormPage
@@ -16,7 +16,7 @@
       :useForgotLink="true"
       :useBtn="true"
       :btnTitle="'Log in'"
-      :btnColor="colorBtn"
+      :btnColor="btnColor"
       :imgBtnWidthPercent="'98'"
       :imgBtnHeight="'44'"
       :useLoginBottom="true"
@@ -47,12 +47,12 @@ const router = useRouter()
 //   '3timesWrong',
 //   '4timesWrong'
 // ]
-let colorBtn = ref('info')
+let btnColor = ref('info')
 let data = ref()
 let errorBorder_MB = ref()
 let errorBorder_Password = ref()
 let titleAlertError = ref('')
-let countInputLoginWrong: any = ref(0)
+let countInputLoginWrong = ref<number | null>(0)
 if (typeof LocalStorage.getItem('countInputLoginWrong') === undefined) {
   LocalStorage.set('countInputLoginWrong', 0)
 } else {
@@ -60,8 +60,8 @@ if (typeof LocalStorage.getItem('countInputLoginWrong') === undefined) {
 }
 const getInput = (mobile_number: string, password: string) => {
   if (mobile_number.length > 2 && password.length > 0) {
-    colorBtn.value = 'danger'
-  } else colorBtn.value = 'info'
+    btnColor.value = 'danger'
+  } else btnColor.value = 'info'
 }
 
 function login(mobile_number: string, password: string) {
@@ -72,7 +72,7 @@ function login(mobile_number: string, password: string) {
     })
     .catch((error) => {
       data.value = error.response.data
-      colorBtn.value = 'info'
+      btnColor.value = 'info'
       if (data.value.message.search('Invalid') != -1) {
         // if invalid mobile number
         errorBorder_MB.value = true // toggle border

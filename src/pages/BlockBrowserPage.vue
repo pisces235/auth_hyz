@@ -6,7 +6,7 @@
       <TitleLoginPage :title_page="title" class="absolute" />
 
       <div class="icon-title width-percentage-100 mt-100 row justify-center">
-        <img class="big" src="../images/cross.png" />
+        <img class="big" src="/images/cross.png" />
       </div>
 
       <div class="count-down text-4xl font-bold mt-25 mb-20">
@@ -18,14 +18,14 @@
       </div>
 
       <FormPage
-      :useAlertError="true"
-      :titleAlertError="titleAlertError"
-      :useBtn="true"
-      :btnTitle="btnTitle"
-      :btnColor="btnColor"
-      :mt_100="false"
-      @submit="resetcountInputWrong()"
-    />
+        :useAlertError="true"
+        :titleAlertError="titleAlertError"
+        :useBtn="true"
+        :btnTitle="btnTitle"
+        :btnColor="btnColor"
+        :mt_100="false"
+        @submit="resetcountInputWrong()"
+      />
     </div>
   </div>
 </template>
@@ -48,7 +48,6 @@ const accountStore = useAccountStore()
 let btnColor = ref('info')
 let titleAlertError = accountStore.titleAlertErrorBlockBrowserPage
 
-
 const countInputLoginWrong = ref()
 // const checkLogin = () => {
 //   countInputLoginWrong.value = LocalStorage.getItem('countInputLoginWrong')
@@ -57,10 +56,10 @@ const countInputLoginWrong = ref()
 //   }
 // }
 const resetcountInputWrong = () => {
-  if(Number(LocalStorage.getItem('countInputLoginWrong')) > 0) {
+  if (Number(LocalStorage.getItem('countInputLoginWrong')) > 0) {
     LocalStorage.set('countInputLoginWrong', 0)
   }
-  if(Number(LocalStorage.getItem('countInputForgotPasswordWrong')) > 0) {
+  if (Number(LocalStorage.getItem('countInputForgotPasswordWrong')) > 0) {
     LocalStorage.set('countInputForgotPasswordWrong', 0)
   }
   router.push('/login')
@@ -87,7 +86,6 @@ let interval = setInterval(() => {
     }
   }
 }, 1000)
-
 
 watchEffect(() => {
   // toggle button
